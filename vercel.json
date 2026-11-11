@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/exterior/:path*", "destination": "/index.html" },
+    { "source": "/entrance/:path*", "destination": "/index.html" },
+    { "source": "/floor/:path*", "destination": "/index.html" }
+  ]
+}

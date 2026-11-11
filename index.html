@@ -1,0 +1,2680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#070b12">
+<meta name="description" content="Landmark 81 — an immersive threshold. Three entrances to the tallest tower in Vietnam, and a floor that should not exist.">
+<title>LANDMARK 81 — Three Ways In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23070b12'/%3E%3Cpath d='M30 8h6v16h10v6H36v26h-6V30H18v-6h12z' fill='%23e8a15a'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#070b12; --ink2:#0b1220; --ink3:#101a28;
+  --cream:#f3ecdf; --muted:#a7b2c0; --muted2:#7d8a99;
+  --amber:#e8a15a; --amber-hi:#ffcf8e; --amber-deep:#b06a32;
+  --line:rgba(243,236,223,.14); --line-soft:rgba(243,236,223,.07);
+  --green:#7fd6a4;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --edge:clamp(16px,2.4vw,34px);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden;overscroll-behavior:none}
+body.is-locked{overflow:hidden}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip:rect(0 0 0 0);white-space:nowrap;overflow:hidden}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;z-index:0}
+
+/* ---------- shared UI ---------- */
+.ui{position:fixed;inset:0;z-index:20;pointer-events:none;opacity:1;visibility:visible;transition:opacity .7s ease,visibility .7s}
+.ui.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.ui button,.ui a,.ui input,.ui [data-hit]{pointer-events:auto}
+.top{position:absolute;top:var(--edge);left:var(--edge);right:var(--edge);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.brand{display:flex;align-items:center;gap:14px;pointer-events:none}
+.brand__mark{width:44px;height:44px;border:1px solid rgba(255,207,142,.45);display:grid;place-items:center;font-family:var(--serif);font-size:20px;color:var(--amber-hi);letter-spacing:.02em;background:rgba(8,13,20,.4);backdrop-filter:blur(10px)}
+.brand__text{display:flex;flex-direction:column;gap:5px}
+.brand__text strong{font-family:var(--serif);font-weight:500;font-size:clamp(19px,1.7vw,24px);letter-spacing:.14em;line-height:1;color:var(--cream)}
+.brand__text span{font-family:var(--mono);font-size:8.5px;letter-spacing:.28em;color:var(--muted);text-transform:uppercase}
+.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.pill{min-height:40px;border:1px solid var(--line);border-radius:99px;background:rgba(9,14,22,.55);backdrop-filter:blur(14px);padding:0 16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);display:inline-flex;align-items:center;gap:9px;cursor:pointer;transition:border-color .3s,background .3s,transform .3s}
+.pill:hover{border-color:rgba(255,207,142,.55);background:rgba(14,21,32,.8);transform:translateY(-1px)}
+.pill--icon{width:40px;padding:0;justify-content:center}
+.pill svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.soundbars{display:inline-flex;align-items:flex-end;gap:2px;height:11px}
+.soundbars i{width:2px;background:var(--amber);border-radius:2px;height:4px;animation:eq 1.2s ease-in-out infinite}
+.soundbars i:nth-child(2){height:9px;animation-delay:.15s}
+.soundbars i:nth-child(3){height:6px;animation-delay:.3s}
+.soundbars i:nth-child(4){height:10px;animation-delay:.45s}
+.pill.is-muted .soundbars i{animation-play-state:paused;height:2px;background:var(--muted2)}
+@keyframes eq{0%,100%{transform:scaleY(.45)}50%{transform:scaleY(1)}}
+
+/* ---------- entrance panel ---------- */
+.entry-panel{position:absolute;left:var(--edge);bottom:var(--edge);width:min(420px,calc(100vw - var(--edge)*2));background:linear-gradient(160deg,rgba(10,16,25,.82),rgba(7,11,18,.72));border:1px solid var(--line-soft);border-left:1px solid rgba(232,161,90,.55);backdrop-filter:blur(18px);padding:18px 18px 16px;box-shadow:0 24px 70px rgba(0,0,0,.45);pointer-events:auto}
+.eyebrow{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--amber-hi);margin-bottom:12px}
+.scene-tag{display:none}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(255,207,142,.4),transparent)}
+.entry-list{display:flex;flex-direction:column;border-top:1px solid var(--line-soft)}
+.entry-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line-soft);padding:10px 2px;cursor:pointer;transition:background .25s,padding .25s}
+.entry-row:hover{background:rgba(255,207,142,.05)}
+.entry-row .num{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--muted2);width:20px;flex:none}
+.entry-row .txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.entry-row .txt b{font-family:var(--serif);font-weight:500;font-size:16px;letter-spacing:.02em;color:rgba(243,236,223,.82);white-space:nowrap}
+.entry-row .txt i{font-style:normal;font-size:10.5px;color:var(--muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry-row .arrow{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--amber);opacity:0;transform:translateX(-4px);transition:all .25s}
+.entry-row:hover .arrow,.entry-row.is-active .arrow{opacity:1;transform:none}
+.entry-row.is-active .num{color:var(--amber-hi)}
+.entry-row.is-active .txt b{color:var(--cream)}
+.entry-detail{padding-top:14px}
+.entry-detail__tag{font-family:var(--mono);font-size:8px;letter-spacing:.26em;color:var(--amber);text-transform:uppercase}
+.entry-detail h1{font-family:var(--serif);font-weight:400;font-size:clamp(26px,2.5vw,34px);line-height:1.02;letter-spacing:.01em;margin:7px 0 8px;color:var(--cream)}
+.entry-detail p{margin:0;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.entry-fact{display:flex;align-items:center;gap:8px;margin-top:10px;font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:var(--muted2);text-transform:uppercase}
+.entry-fact::before{content:"";width:14px;height:1px;background:var(--amber)}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;margin-top:14px;border:0;padding:13px 16px;background:linear-gradient(100deg,#d98d4d,#f0b473 55%,#e0a05e);color:#160f08;font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;position:relative;overflow:hidden;transition:filter .3s,transform .3s}
+.cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.cta:disabled{opacity:.55;cursor:progress;transform:none}
+.cta span{font-size:15px;line-height:0}
+.cta::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);transform:translateX(-110%);transition:transform .8s ease}
+.cta:hover::after{transform:translateX(110%)}
+
+/* ---------- pins ---------- */
+.pins{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.pin{position:absolute;left:0;top:0;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;background:none;border:0;padding:0;pointer-events:auto;cursor:pointer;opacity:0;transition:opacity .35s ease}
+.pin.is-on{opacity:1}
+.pin.is-behind{opacity:0!important;pointer-events:none!important}
+.pin__dot{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,207,142,.6);background:rgba(8,13,20,.72);backdrop-filter:blur(8px);display:grid;place-items:center;font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--amber-hi);box-shadow:0 0 0 5px rgba(232,161,90,.06),0 8px 30px rgba(0,0,0,.5);transition:background .3s,transform .3s,box-shadow .3s}
+.pin__stem{width:1px;height:26px;background:linear-gradient(180deg,rgba(255,207,142,.75),rgba(255,207,142,.1))}
+.pin__text{position:absolute;left:50%;bottom:100%;transform:translate(-50%,-4px);white-space:nowrap;text-align:center;display:flex;flex-direction:column;gap:2px;text-shadow:0 2px 14px rgba(0,0,0,.8);padding:7px 11px;background:rgba(8,13,20,.62);border:1px solid rgba(255,207,142,.24);backdrop-filter:blur(8px);opacity:0;transition:opacity .3s ease}
+.pin:hover .pin__text,.pin.is-active .pin__text{opacity:1}
+.pin__text b{font-family:var(--serif);font-weight:500;font-size:15px;letter-spacing:.03em;color:var(--cream)}
+.pin__text i{font-style:normal;font-family:var(--mono);font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,207,142,.9)}
+.pin:hover .pin__dot,.pin.is-active .pin__dot{background:var(--amber);color:#180f07;transform:scale(1.12);box-shadow:0 0 0 7px rgba(232,161,90,.14),0 0 30px rgba(232,161,90,.55)}
+.pin__cta{display:inline-flex;align-items:center;justify-content:center;gap:4px;margin-top:5px;padding:3px 8px;border-radius:99px;background:rgba(232,161,90,.18);border:1px solid rgba(255,207,142,.45);font-family:var(--mono);font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber-hi);transition:all .25s ease}
+.pin:hover .pin__cta,.pin.is-active .pin__cta{background:var(--amber);color:#160f08;border-color:var(--amber);font-weight:600;box-shadow:0 2px 10px rgba(232,161,90,.4)}
+.pins.is-off .pin{opacity:0!important;pointer-events:none!important}
+
+/* ---------- dock ---------- */
+.dock{position:fixed;right:var(--edge);top:50%;transform:translateY(-50%);z-index:40;width:232px;background:rgba(8,13,20,.78);border:1px solid var(--line-soft);backdrop-filter:blur(18px);box-shadow:0 24px 60px rgba(0,0,0,.45);pointer-events:auto;max-height:calc(100vh - 120px);display:flex;flex-direction:column}
+.dock__head{display:flex;align-items:center;justify-content:space-between;padding:12px 13px;border-bottom:1px solid var(--line-soft);flex:none}
+.dock__head span{font-family:var(--mono);font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--amber-hi)}
+.dock__toggle{border:0;background:none;color:var(--muted);font-family:var(--mono);font-size:14px;line-height:1;cursor:pointer;padding:2px 4px;transition:color .25s}
+.dock__toggle:hover{color:var(--cream)}
+.dock__body{padding:6px 13px 12px;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(232,161,90,.4) transparent}
+.dock.is-collapsed .dock__body{display:none}
+.ctl{display:block;padding:9px 0;border-bottom:1px solid var(--line-soft)}
+.ctl__top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:7px}
+.ctl__label{font-family:var(--mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.ctl__val{font-family:var(--mono);font-size:8.5px;color:var(--amber-hi)}
+.ctl input[type=range]{width:100%;height:14px;appearance:none;background:transparent;margin:0;cursor:pointer}
+.ctl input[type=range]::-webkit-slider-runnable-track{height:2px;background:rgba(243,236,223,.16)}
+.ctl input[type=range]::-webkit-slider-thumb{appearance:none;width:10px;height:10px;border-radius:50%;background:var(--amber-hi);margin-top:-4px;box-shadow:0 0 10px rgba(232,161,90,.5)}
+.ctl input[type=range]::-moz-range-track{height:2px;background:rgba(243,236,223,.16)}
+.ctl input[type=range]::-moz-range-thumb{border:0;width:10px;height:10px;border-radius:50%;background:var(--amber-hi)}
+.ctl--switch{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.switch{position:relative;width:30px;height:16px;border-radius:99px;border:1px solid rgba(243,236,223,.25);background:rgba(243,236,223,.08);cursor:pointer;transition:background .25s,border-color .25s;flex:none;padding:0}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--muted);transition:transform .25s,background .25s}
+.switch.is-on{background:rgba(232,161,90,.3);border-color:rgba(255,207,142,.5)}
+.switch.is-on::after{transform:translateX(14px);background:var(--amber-hi)}
+.dock__actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding-top:11px}
+.dock__actions button{border:1px solid var(--line);background:rgba(243,236,223,.04);padding:9px 4px;font-family:var(--mono);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .25s}
+.dock__actions button:hover{border-color:rgba(255,207,142,.5);color:var(--cream);background:rgba(232,161,90,.08)}
+.dock__note{margin-top:10px;font-family:var(--mono);font-size:7.5px;letter-spacing:.12em;color:var(--muted2);line-height:1.6}
+
+.hint{position:absolute;left:50%;bottom:calc(var(--edge) + 4px);transform:translateX(-50%);font-family:var(--mono);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:rgba(243,236,223,.5);white-space:nowrap;pointer-events:none}
+.hint--journey{display:flex;align-items:center;gap:10px}
+.hint__ticks{display:inline-flex;align-items:center;gap:5px;pointer-events:auto;cursor:pointer}
+.hint__ticks i{display:block;width:18px;height:2px;background:rgba(243,236,223,.22);transition:background .45s,transform .45s;cursor:pointer;padding:4px 0}
+.hint__ticks i.is-past{background:rgba(232,161,90,.5)}
+.hint__ticks i.is-on{background:var(--amber-hi);transform:scaleY(2.5)}
+.hint__arrow{background:none;border:none;color:rgba(243,236,223,.5);font-size:11px;cursor:pointer;padding:4px 6px;pointer-events:auto;transition:color .2s,transform .2s;font-family:sans-serif}
+.hint__arrow:hover{color:var(--amber-hi);transform:scale(1.25)}
+.lift-cta{position:fixed;bottom:calc(var(--edge) + 54px);left:50%;transform:translateX(-50%) translateY(12px);background:rgba(20,15,6,.88);border:1px solid #e8c96a;color:#f4ecd8;padding:10px 18px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:99px;box-shadow:0 12px 36px rgba(0,0,0,.6),0 0 24px rgba(232,201,106,.25);opacity:0;visibility:hidden;transition:all .35s ease;z-index:45;pointer-events:auto}
+.lift-cta.is-visible{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.lift-cta:hover{background:#e8c96a;color:#141006;box-shadow:0 0 32px rgba(232,201,106,.5)}
+.lift-cta__icon{display:inline-block;margin-right:6px;color:#e8c96a}
+.lift-cta:hover .lift-cta__icon{color:#141006}
+.credit{position:absolute;right:var(--edge);bottom:calc(var(--edge) + 4px);font-family:var(--mono);font-size:7.5px;letter-spacing:.14em;color:rgba(243,236,223,.32);text-transform:uppercase;pointer-events:none}
+
+/* ---------- interior HUD ---------- */
+.hud{display:flex;flex-direction:column;gap:7px}
+.hud__eyebrow{font-family:var(--mono);font-size:8px;letter-spacing:.32em;color:#e8c96a;text-transform:uppercase}
+.hud__title{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.4vw,34px);letter-spacing:.05em;line-height:1;color:#f4ecd8}
+.hud__sub{font-family:var(--mono);font-size:8px;letter-spacing:.2em;color:rgba(244,236,216,.5);text-transform:uppercase}
+.ui--interior .entry-panel{border-left-color:rgba(232,201,106,.6)}
+.ui--interior .eyebrow{color:#e8c96a}
+.ui--interior .eyebrow::after{background:linear-gradient(90deg,rgba(232,201,106,.4),transparent)}
+.ui--interior .entry-detail__tag{color:#e8c96a}
+.ui--interior .cta{background:linear-gradient(100deg,#c9a94f,#ecd489 55%,#d6b862);color:#141006}
+.ui--interior .pin__dot{border-color:rgba(232,201,106,.55);color:#f0df9a;box-shadow:0 0 0 5px rgba(232,201,106,.06),0 8px 30px rgba(0,0,0,.5)}
+.ui--interior .pin__text{padding:7px 11px;background:rgba(24,17,4,.78);border:1px solid rgba(232,201,106,.32);backdrop-filter:blur(8px)}
+.ui--interior .pin__text i{color:rgba(232,201,106,.9)}
+.ui--interior .pin:hover .pin__dot,.ui--interior .pin.is-active .pin__dot{background:#e8c96a;color:#141006;box-shadow:0 0 0 7px rgba(232,201,106,.12),0 0 30px rgba(232,201,106,.4)}
+.crosshair{position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:rgba(244,236,216,.65);box-shadow:0 0 0 4px rgba(0,0,0,.12);pointer-events:none;opacity:.65}
+
+.minimap{position:fixed;right:var(--edge);bottom:var(--edge);z-index:38;width:240px;background:rgba(8,13,20,.72);border:1px solid var(--line-soft);backdrop-filter:blur(14px);padding:10px 11px 8px;pointer-events:auto}
+.minimap__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-family:var(--mono);font-size:7px;letter-spacing:.22em;color:rgba(232,201,106,.85);text-transform:uppercase}
+.minimap svg{display:block;width:100%;height:auto}
+.minimap__dot{fill:#ffd480;filter:drop-shadow(0 0 4px rgba(255,212,128,.9))}
+.minimap__dir{stroke:#ffd480;stroke-width:1.4;stroke-linecap:round}
+.minimap__mk{fill:rgba(232,201,106,.85)}
+.minimap__room{fill:rgba(232,201,106,.07);stroke:rgba(232,201,106,.3);stroke-width:.8}
+.minimap__wall{stroke:rgba(232,201,106,.22);stroke-width:.7}
+.minimap.is-hidden{display:none}
+
+.joystick{position:fixed;left:calc(var(--edge) + 8px);bottom:calc(var(--edge) + 70px);width:104px;height:104px;border-radius:50%;border:1px solid rgba(232,201,106,.28);background:rgba(10,9,4,.28);backdrop-filter:blur(6px);z-index:38;display:none;place-items:center;touch-action:none}
+.joystick__knob{width:44px;height:44px;border-radius:50%;border:1px solid rgba(232,201,106,.5);background:rgba(232,201,106,.12);transition:transform .08s linear}
+@media (pointer:coarse){.joystick{display:grid}}
+
+/* ---------- veil / preloader / modal / fallback ---------- */
+#veil{position:fixed;inset:0;z-index:80;background:#05080d;opacity:0;visibility:hidden;pointer-events:none;display:grid;place-items:center;transition:opacity .5s ease,visibility .5s}
+#veil.is-on{opacity:1;visibility:visible;pointer-events:auto}
+#veil .veil__label{font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--amber-hi);text-align:center;line-height:2}
+
+#preloader{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:radial-gradient(120% 90% at 70% 20%,#101b2a 0%,#070b12 55%,#04070b 100%);transition:opacity 1s ease,visibility 1s;overflow:hidden}
+#preloader.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+#preloader::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 72% 78%,rgba(232,161,90,.09),transparent 70%);pointer-events:none}
+.pre__inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px;width:min(560px,84vw);text-align:center}
+.pre__kicker{font-family:var(--mono);font-size:8px;letter-spacing:.4em;color:var(--muted);text-transform:uppercase}
+.pre__title{font-family:var(--serif);font-weight:400;font-size:clamp(46px,7vw,92px);line-height:.94;letter-spacing:.06em;margin:0;color:var(--cream)}
+.pre__title em{font-style:normal;color:var(--amber-hi)}
+.pre__sub{font-family:var(--mono);font-size:8px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted2)}
+.pre__bar{position:relative;width:min(320px,64vw);height:1px;background:rgba(243,236,223,.14);overflow:hidden;margin-top:8px}
+.pre__bar b{position:absolute;inset:0;transform-origin:0;transform:scaleX(var(--p,0));background:linear-gradient(90deg,#b06a32,#ffcf8e);transition:transform .45s ease}
+.pre__enter{border:1px solid rgba(255,207,142,.5);background:rgba(232,161,90,.06);color:var(--amber-hi);padding:14px 26px;font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .35s;opacity:0;transform:translateY(8px);pointer-events:none}
+.pre__enter.is-shown{opacity:1;transform:none;pointer-events:auto}
+.pre__enter:hover{background:var(--amber);color:#160f08;border-color:var(--amber)}
+.pre__hint{font-family:var(--mono);font-size:7.5px;letter-spacing:.24em;color:var(--muted2);text-transform:uppercase}
+
+#toast{position:fixed;left:50%;top:calc(var(--edge) + 84px);transform:translate(-50%,-12px);z-index:70;background:rgba(8,13,20,.86);border:1px solid var(--line);border-left:1px solid var(--amber);backdrop-filter:blur(14px);padding:11px 16px;font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;color:var(--cream);text-transform:uppercase;opacity:0;visibility:hidden;transition:all .45s ease;max-width:min(440px,86vw);text-align:center}
+#toast.is-on{opacity:1;visibility:visible;transform:translate(-50%,0)}
+
+#about{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:rgba(4,7,11,.72);backdrop-filter:blur(16px);opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+#about.is-on{opacity:1;visibility:visible}
+.about__card{position:relative;width:min(620px,90vw);max-height:84vh;overflow:auto;background:linear-gradient(160deg,#0d1622,#080d14);border:1px solid var(--line);border-top:1px solid rgba(255,207,142,.45);padding:clamp(24px,4vw,44px);box-shadow:0 40px 120px rgba(0,0,0,.6)}
+.about__card h2{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3vw,40px);margin:0 0 18px;letter-spacing:.04em}
+.about__card p{font-size:13px;line-height:1.75;color:var(--muted);margin:0 0 14px}
+.about__card p b{color:var(--cream);font-weight:500}
+.about__close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:rgba(243,236,223,.04);cursor:pointer;display:grid;place-items:center;transition:all .3s}
+.about__close:hover{background:rgba(232,161,90,.12);border-color:rgba(255,207,142,.5)}
+.about__close svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.about__keys{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin-top:16px;font-family:var(--mono);font-size:8px;letter-spacing:.1em;color:var(--muted2);text-transform:uppercase}
+.about__keys b{color:var(--amber-hi);font-weight:500}
+
+#fallback{position:fixed;inset:0;z-index:110;display:none;place-items:center;background:#070b12;color:var(--cream);text-align:center;padding:24px}
+#fallback.is-on{display:grid}
+#fallback .card{max-width:520px;border:1px solid var(--line);padding:36px;background:#0b1220}
+#fallback h1{font-family:var(--serif);font-weight:400;font-size:34px;margin:0 0 12px}
+#fallback p{font-size:13px;line-height:1.7;color:var(--muted)}
+
+@media (max-width:1100px){
+  .credit{display:none}
+  .dock{width:216px}
+}
+@media (max-width:900px){
+  :root{--edge:14px}
+  .brand{gap:10px}
+  .brand__mark{width:34px;height:34px;font-size:15px}
+  .brand__text span{display:none}
+  .brand__text strong{font-size:14px;letter-spacing:.1em}
+  .pill{min-height:36px;padding:0 11px;font-size:8.5px}
+  .pill--icon{width:36px;padding:0}
+  .actions{gap:6px}
+  .entry-panel{padding:12px 12px 10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));left:var(--edge);right:var(--edge);width:auto;max-height:54vh;overflow:auto}
+  .scene-tag{display:block;font-family:var(--mono);font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .entry-detail h1{font-size:22px;margin-bottom:6px}
+  .entry-detail p{font-size:11px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .entry-fact{display:none}
+  .entry-row{padding:8px 2px}
+  .entry-detail h1{font-size:25px}
+  .entry-detail p{font-size:11.5px;line-height:1.55}
+  .cta{font-size:9.5px;letter-spacing:.16em;font-weight:600;padding:12px 14px}
+  .entry-row .txt i{display:none}
+  .entry-row .txt b{font-size:15px}
+  .hint{display:none}
+  .dock{top:calc(var(--edge) + 74px);right:var(--edge);bottom:auto;transform:none;width:min(232px,calc(100vw - 28px))}
+  #fsEx{display:none}
+  .ui--interior .hud{display:none}
+  .ui--interior .top{justify-content:flex-end}
+  .pin__text{display:none}
+  #toast{top:calc(var(--edge) + 104px);bottom:auto;max-width:calc(100vw - 28px);font-size:7.5px}
+  .dock{top:calc(var(--edge) + 56px)}
+  .dock.is-collapsed{width:auto}
+  .dock.is-collapsed .dock__head{border-bottom:0;padding:10px 13px;gap:16px}
+    .minimap{width:170px;bottom:calc(var(--edge) + 54px);right:var(--edge)}
+  .joystick{left:calc(var(--edge) + 4px);bottom:calc(16px + 39vh);width:88px;height:88px;background:rgba(12,10,5,.14);border-color:rgba(232,201,106,.2)}
+  .ui--interior .entry-panel{bottom:10px}
+  .ui--interior .hint{bottom:auto;top:calc(var(--edge) + 92px)}
+  .crosshair{opacity:.5}
+  .dock__body{padding-bottom:10px}
+  .ui--interior .minimap{display:none}
+}
+@media (max-width:900px) and (pointer:fine){
+  /* narrow desktop window still has a wheel — keep the journey cue discoverable */
+  .hint--journey{display:flex;left:calc(var(--edge) + 2px);right:auto;bottom:auto;top:calc(var(--edge) + 52px);transform:none;font-size:7.5px;letter-spacing:.18em;gap:10px;padding:6px 9px;background:rgba(8,8,5,.55);border:1px solid rgba(232,201,106,.2);backdrop-filter:blur(6px)}
+  .ui--interior .hint{top:calc(var(--edge) + 52px);bottom:auto}
+  .dock{top:calc(var(--edge) + 92px)}
+  #toast{top:calc(var(--edge) + 148px)}
+}
+@media (max-height:700px) and (min-width:901px){
+  .dock{max-height:calc(100vh - 80px)}
+  .entry-panel{max-height:calc(100vh - 110px);overflow:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body class="is-locked">
+<canvas id="gl" aria-label="Interactive 3D model of Landmark 81"></canvas>
+
+<div id="preloader" role="progressbar" aria-label="Loading experience" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="pre__inner">
+    <span class="pre__kicker">An immersive threshold</span>
+    <h1 class="pre__title">LANDMARK <em>81</em></h1>
+    <span class="pre__sub">Saigon · 461.2 metres · 81 floors</span>
+    <div class="pre__bar"><b></b></div>
+    <span class="pre__hint" id="preHint">Loading the tower — 0%</span>
+    <button class="pre__enter" id="enterSite" type="button">Enter the landmark</button>
+  </div>
+</div>
+
+<!-- EXTERIOR UI -->
+<section class="ui ui--exterior" id="uiExterior">
+  <header class="top">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">81</span>
+      <div class="brand__text"><strong>LANDMARK 81</strong><span>Ho Chi Minh City · three ways in</span></div>
+    </div>
+    <div class="actions">
+      <button class="pill" id="soundEx" type="button" aria-pressed="true"><span class="soundbars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pill__label">Sound</span></button>
+      <button class="pill" id="aboutEx" type="button">About</button>
+      <button class="pill pill--icon" id="fsEx" type="button" aria-label="Toggle fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </header>
+
+  <div class="pins" id="pinsExterior"></div>
+
+  <aside class="entry-panel" id="panelExterior" aria-label="Building entrances">
+    <span class="eyebrow">Three ways in</span>
+    <div class="entry-list" id="entryListExterior"></div>
+    <div class="entry-detail">
+      <span class="entry-detail__tag" id="exTag"></span>
+      <h1 id="exName"></h1>
+      <p id="exDesc"></p>
+      <div class="entry-fact" id="exFact"></div>
+      <button class="cta" id="enterBuilding" type="button">Enter through this entrance <span aria-hidden="true">→</span></button>
+    </div>
+  </aside>
+
+  <div class="hint hint--journey" id="hintExterior">
+    <button class="hint__arrow" id="exPrev" type="button" aria-label="Previous entrance">←</button>
+    <span id="journeyLabel">Scroll · Overview</span>
+    <span class="hint__ticks" id="journeyTicks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <button class="hint__arrow" id="exNext" type="button" aria-label="Next entrance">→</button>
+  </div>
+  <div class="credit">Landmark 81 model · concept experience</div>
+</section>
+
+<!-- INTERIOR UI -->
+<section class="ui ui--interior is-hidden" id="uiInterior">
+  <header class="top">
+    <div class="hud">
+      <span class="hud__eyebrow">Backrooms · Level 0</span>
+      <span class="hud__title">The Floor Below</span>
+      <span class="hud__sub" id="innerZone">Lobby · south wing</span>
+    </div>
+    <div class="actions">
+      <button class="pill" id="soundIn" type="button" aria-pressed="true"><span class="soundbars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="pill__label">Sound</span></button>
+      <button class="pill" id="aboutIn" type="button">About</button>
+      <button class="pill" id="exitBuilding" type="button"><span aria-hidden="true">←</span> Return to Saigon</button>
+    </div>
+  </header>
+
+  <div class="pins" id="pinsInterior"></div>
+  <div class="crosshair" aria-hidden="true"></div>
+
+  <aside class="entry-panel" id="panelInterior" aria-label="Interior thresholds">
+    <span class="scene-tag">The Floor Below · Level 0</span>
+    <span class="eyebrow">Thresholds</span>
+    <div class="entry-list" id="entryListInterior"></div>
+    <div class="entry-detail">
+      <span class="entry-detail__tag" id="inTag"></span>
+      <h1 id="inName"></h1>
+      <p id="inDesc"></p>
+      <div class="entry-fact" id="inFact"></div>
+      <button class="cta" id="walkThere" type="button">Walk to this threshold <span aria-hidden="true">→</span></button>
+    </div>
+  </aside>
+
+  <button class="lift-cta" id="liftCta" type="button"><span class="lift-cta__icon">▲</span> Take Express Lift to Saigon (461m) →</button>
+
+  <div class="hint hint--journey" id="hintInterior">
+    <button class="hint__arrow" id="floorPrev" type="button" aria-label="Previous floor">←</button>
+    <span id="floorLabel">Scroll · 01 The Reception Desk</span>
+    <span class="hint__ticks" id="floorTicks" aria-hidden="true"><i></i><i></i><i></i></span>
+    <button class="hint__arrow" id="floorNext" type="button" aria-label="Next floor">→</button>
+  </div>
+  <div class="joystick" id="joystick" aria-hidden="true"><span class="joystick__knob" id="joyKnob"></span></div>
+
+  <div class="minimap" id="minimap" aria-label="Schematic map of the level">
+    <div class="minimap__head"><span>Schematic · Level 0</span><span id="mmDist">0 m</span></div>
+    <svg viewBox="0 0 300 92" aria-hidden="true">
+      <rect class="minimap__room" x="10" y="12" width="120" height="68" rx="1"/>
+      <rect class="minimap__room" x="130" y="20" width="86" height="60" rx="1"/>
+      <rect class="minimap__room" x="216" y="34" width="60" height="26" rx="1"/>
+      <rect class="minimap__room" x="276" y="28" width="16" height="38" rx="1"/>
+      <line class="minimap__wall" x1="130" y1="12" x2="130" y2="80"/>
+      <line class="minimap__wall" x1="216" y1="20" x2="216" y2="80"/>
+      <line class="minimap__wall" x1="10" y1="47" x2="60" y2="47"/>
+      <circle class="minimap__mk" cx="40" cy="47" r="2.4"/>
+      <circle class="minimap__mk" cx="90" cy="30" r="2.4"/>
+      <circle class="minimap__mk" cx="250" cy="47" r="2.4"/>
+      <line class="minimap__dir" id="mmDir" x1="0" y1="0" x2="0" y2="0"/>
+      <circle class="minimap__dot" id="mmDot" cx="40" cy="47" r="3.2"/>
+    </svg>
+  </div>
+</section>
+
+<aside class="dock" id="dock" aria-label="Scene controls">
+  <div class="dock__head"><span>Scene controls</span><button class="dock__toggle" id="dockToggle" type="button" aria-label="Collapse controls">−</button></div>
+  <div class="dock__body" id="dockBody"></div>
+</aside>
+
+<div id="veil" aria-live="polite"><span class="veil__label" id="veilLabel"></span></div>
+<div id="toast" role="status"></div>
+
+<div id="about" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+  <div class="about__card">
+    <button class="about__close" id="aboutClose" type="button" aria-label="Close about"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h2 id="aboutTitle">Landmark 81 — Three Ways In</h2>
+    <p><b>Home page:</b> a dusk reconstruction of Landmark 81 in Vinhomes Central Park, Ho Chi Minh City — 461.2 metres, 81 floors, the tallest tower in Vietnam. Three entrances are marked and described. Scroll to travel from the overview to entrance 01, then 02 and 03 — the camera eases along the route and settles at each entrance. Scroll up to reverse, drag to orbit, pinch to zoom.</p>
+    <p><b>The building:</b> step through any entrance and the landmark gives way to a Backrooms office level — fluorescent yellow, damp carpet, one very long corridor. Three thresholds are marked inside. Scroll (or press 1–3) and the camera walks the corridors to the next threshold; WASD still takes over at any time, drag to look, Shift to run.</p>
+    <p><b>Routes:</b> every view has an address — <code>#/exterior</code>, <code>#/entrance/1</code>–<code>3</code>, and <code>#/floor/1</code>–<code>3</code> — so the floor and each entrance can be linked or bookmarked directly.</p>
+    <p><b>Models:</b> Landmark 81 (3D scan, supplied) and the Backrooms VR environment (supplied). Lighting, atmosphere, window lights, interface and interaction built in Three.js / WebGL. This is a concept experience.</p>
+    <div class="about__keys">
+      <span><b>Drag</b> orbit / look</span><span><b>Scroll</b> next / previous view</span>
+      <span><b>Pinch</b> zoom (exterior)</span><span><b>WASD</b> walk</span>
+      <span><b>Shift</b> run</span><span><b>1–3</b> entrances / thresholds</span><span><b>Esc</b> close panels</span>
+    </div>
+  </div>
+</div>
+
+<div id="fallback" role="alert">
+  <div class="card">
+    <h1>Landmark 81 — Three Ways In</h1>
+    <p>This experience needs WebGL, which your browser or device has not made available.</p>
+    <p>Landmark 81 stands 461.2 metres above Ho Chi Minh City. Three entrances lead into the building — and, in this concept, somewhere else entirely.</p>
+  </div>
+</div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const clamp = (v,a,b) => Math.min(b, Math.max(a,v));
+const lerp = (a,b,t) => a+(b-a)*t;
+const wait = (ms) => new Promise(r => setTimeout(r, ms));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const coarse = matchMedia('(pointer: coarse)').matches;
+const DEG = Math.PI/180;
+
+/* ---------------- content ---------------- */
+const ENTRANCES = [
+  {
+    num:'01', name:'The Tower Lobby', face:'South façade · ground level',
+    short:'Stone, glass, and the address of the city.',
+    desc:'The ceremonial door at the foot of the tower: a double-height hall of stone and cold glass where the street noise stops at the threshold. On the brochure this is where the building begins.',
+    fact:'461.2 m · 81 floors · completed 2018',
+    anchor:[-4, 3.4, 24.75], az:0.03,
+    spawn:{ x:-52, z:2.2, yaw:-Math.PI/2 }
+  },
+  {
+    num:'02', name:'The Vincom Arcade', face:'East façade · retail podium',
+    short:'Escalators, perfume, and a corridor nobody uses.',
+    desc:'The retail podium’s busiest mouth: air-conditioning, polished floors, escalators climbing into the mall. Behind the last storefront there is a service corridor with no cameras and a door that opens inward.',
+    fact:'Retail podium · Vincom Center',
+    anchor:[35.55, 3.4, 6], az:Math.PI/2-0.04,
+    spawn:{ x:-62, z:9, yaw:-Math.PI/2 }
+  },
+  {
+    num:'03', name:'The River Doors', face:'West façade · park side',
+    short:'The quiet entrance. Always unlocked.',
+    desc:'A side entrance facing the park promenade, where the Saigon River slides past the trees. No queue, no signage, no guard after dark. The glass is warm to the touch, even in the rain.',
+    fact:'Riverside promenade · after hours',
+    anchor:[-41.15, 3.4, -6], az:-Math.PI/2+0.04,
+    spawn:{ x:-8, z:4, yaw:-Math.PI/2 }
+  }
+];
+const THRESHOLDS = [
+  {
+    num:'01', name:'The Reception Desk', zone:'Lobby · south wing',
+    short:'A counter with no one behind it.',
+    desc:'A pale wooden reception counter, a lamp that stays on, a ledger open to a page with today’s date. The armchairs face the door you just came through. The corridor folds back on itself here.',
+    fact:'Reception counter · level 0',
+    anchor:[-45.1, 1.35, 9.3],
+    spawn:{ x:-52, z:2.4, yaw:-2.34 }
+  },
+  {
+    num:'02', name:'The Exit Door', zone:'North wall · west wing',
+    short:'Fire doors under a sign that never goes out.',
+    desc:'A pair of fire doors set into the yellow wall, a red EXIT sign humming above them. The carpet in front of the threshold is worn in a straight line, as if something has been walking in and out for a very long time.',
+    fact:'EXIT · red sign · never opened',
+    anchor:[-49.65, 1.6, -4.35],
+    spawn:{ x:-49.65, z:0.6, yaw:0 }
+  },
+  {
+    num:'03', name:'The Long Corridor', zone:'East corridor',
+    short:'Eighty metres of carpet, then it turns.',
+    desc:'The corridor runs the length of the level under identical ceiling panels. Somewhere past the last light, the carpet changes colour. It is always exactly eighty metres, no matter how many times you walk it.',
+    fact:'East corridor · ends at a wall',
+    anchor:[-6, 1.55, 4],
+    spawn:{ x:-10, z:4, yaw:-Math.PI/2 }
+  }
+];
+
+const state = {
+  phase:'loading', busy:false, muted:false, soundOn:true,
+  selectedEntrance:0, selectedThreshold:0, frames:0, time:0,
+  interiorReady:false, interiorLoading:false, interiorProgress:0,
+  showPins:true, showMinimap:true, autoOrbit:true, introDone:false,
+  lastInteract:performance.now(), lastSpawn:{x:-52,z:2.2,yaw:-Math.PI/2}
+};
+
+/* ---------------- renderer ---------------- */
+const canvas = $('#gl');
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false, powerPreference:'high-performance', preserveDrawingBuffer:true });
+} catch (e) {
+  $('#fallback').classList.add('is-on');
+  $('#preloader').classList.add('is-hidden');
+  throw e;
+}
+renderer.setPixelRatio(Math.min(devicePixelRatio, coarse?1.3:1.75));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.setClearColor('#070b12', 1);
+
+const clock = new THREE.Clock();
+const composer = new EffectComposer(renderer);
+const renderPass = new RenderPass(new THREE.Scene(), new THREE.PerspectiveCamera());
+composer.addPass(renderPass);
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth/2, innerHeight/2), .55, .62, .82);
+composer.addPass(bloom);
+const grade = new ShaderPass({
+  uniforms:{ tDiffuse:{value:null}, uTime:{value:0}, uVignette:{value:.5}, uGrain:{value:.016}, uScene:{value:0}, uFlicker:{value:0} },
+  vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+  fragmentShader:`
+    uniform sampler2D tDiffuse; uniform float uTime,uVignette,uGrain,uScene,uFlicker; varying vec2 vUv;
+    float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+    void main(){
+      vec4 c = texture2D(tDiffuse, vUv);
+      float flick = 1.0 - uFlicker * 0.09 * pow(max(0.0, sin(uTime*3.1)*0.55 + sin(uTime*11.7)*0.35 + 0.35), 3.0);
+      c.rgb *= flick;
+      vec2 d = vUv - .5;
+      float v = smoothstep(.92, .24, length(d) * (1.04 + uVignette));
+      c.rgb *= mix(.62, 1.0, v);
+      float g = (hash(vUv*vec2(1920.,1080.) + fract(uTime)*7.) - .5) * uGrain * (0.4 + 0.6 * smoothstep(0.0, 0.45, dot(c.rgb, vec3(.333))));
+      c.rgb += g;
+      c.rgb = mix(c.rgb, c.rgb*vec3(1.015,1.0,.965) + vec3(.006,.005,.002), uScene*.7);
+      gl_FragColor = c;
+    }`
+});
+composer.addPass(grade);
+composer.addPass(new OutputPass());
+
+/* ---------------- texture helpers ---------------- */
+function canvasTexture(size, painter){
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  painter(c.getContext('2d'), size);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+}
+const dotTexture = canvasTexture(64, (ctx,s) => {
+  const g = ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+  g.addColorStop(0,'rgba(255,255,255,1)');
+  g.addColorStop(.35,'rgba(255,255,255,.55)');
+  g.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle = g; ctx.fillRect(0,0,s,s);
+});
+const glowTexture = canvasTexture(256, (ctx,s) => {
+  const g = ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+  g.addColorStop(0,'rgba(255,220,170,.9)');
+  g.addColorStop(.35,'rgba(232,161,90,.28)');
+  g.addColorStop(1,'rgba(232,161,90,0)');
+  ctx.fillStyle = g; ctx.fillRect(0,0,s,s);
+});
+
+/* ---------------- exterior scene ---------------- */
+const sceneEx = new THREE.Scene();
+sceneEx.fog = new THREE.Fog('#0c1624', 260, 1500);
+const camEx = new THREE.PerspectiveCamera(44, innerWidth/innerHeight, .5, 4000);
+
+const skyUniforms = {
+  uTop:{ value:new THREE.Color('#060b16') },
+  uMid:{ value:new THREE.Color('#152741') },
+  uHorizon:{ value:new THREE.Color('#d98957') },
+  uDeep:{ value:new THREE.Color('#05080d') },
+  uSun:{ value:new THREE.Color('#ffd6a0') },
+  uSunDir:{ value:new THREE.Vector3(-.72,.14,.55).normalize() },
+  uTime:{ value:0 }
+};
+const sky = new THREE.Mesh(new THREE.SphereGeometry(1800, 48, 32), new THREE.ShaderMaterial({
+  side:THREE.BackSide, depthWrite:false, fog:false, uniforms:skyUniforms,
+  vertexShader:`varying vec3 vDir; void main(){ vDir = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+  fragmentShader:`
+    varying vec3 vDir;
+    uniform vec3 uTop,uMid,uHorizon,uDeep,uSun,uSunDir; uniform float uTime;
+    float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+    void main(){
+      vec3 dir = normalize(vDir);
+      float h = clamp(dir.y, -1.0, 1.0);
+      vec3 col = mix(uHorizon, uMid, smoothstep(-.02,.24,h));
+      col = mix(col, uTop, smoothstep(.16,.8,h));
+      col = mix(uDeep, col, smoothstep(-.22,-.01,h));
+      float sd = max(dot(dir, normalize(uSunDir)), 0.0);
+      col += uSun * pow(sd, 7.0) * .38;
+      col += vec3(1.0,.82,.58) * pow(sd, 220.0) * 2.6;
+      col += vec3(1.0,.6,.3) * pow(sd, 2.0) * .06;
+      float star = step(.9982, hash(floor(dir.xz*420.0) + floor(dir.y*420.0))) * smoothstep(.18,.5,h);
+      col += vec3(.75,.82,1.0) * star * (.5 + .5*sin(uTime*2.0 + hash(dir.xz)*20.0)) * .5;
+      gl_FragColor = vec4(col,1.0);
+    }`
+}));
+sceneEx.add(sky);
+
+/* environment reflections */
+(function makeEnvironment(){
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 512;
+  const ctx = c.getContext('2d');
+  const g = ctx.createLinearGradient(0,0,0,512);
+  g.addColorStop(0,'#050a14'); g.addColorStop(.38,'#122238'); g.addColorStop(.5,'#c07a4a');
+  g.addColorStop(.56,'#3a2a22'); g.addColorStop(1,'#04070b');
+  ctx.fillStyle = g; ctx.fillRect(0,0,1024,512);
+  const sun = ctx.createRadialGradient(300,262,0,300,262,180);
+  sun.addColorStop(0,'rgba(255,220,170,.95)'); sun.addColorStop(.25,'rgba(255,180,110,.35)'); sun.addColorStop(1,'rgba(255,160,90,0)');
+  ctx.fillStyle = sun; ctx.fillRect(0,0,1024,512);
+  const tex = new THREE.CanvasTexture(c);
+  tex.mapping = THREE.EquirectangularReflectionMapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  pmrem.compileEquirectangularShader();
+  sceneEx.environment = pmrem.fromEquirectangular(tex).texture;
+  tex.dispose(); pmrem.dispose();
+})();
+
+const hemi = new THREE.HemisphereLight('#8fb0d6', '#2b1c12', .78);
+sceneEx.add(hemi);
+const sun = new THREE.DirectionalLight('#ffc48a', 2.9);
+sun.position.set(-260, 180, 240);
+sceneEx.add(sun);
+const fill = new THREE.DirectionalLight('#9dbcff', 1.0);
+fill.position.set(300, 160, -220);
+sceneEx.add(fill);
+const rim = new THREE.DirectionalLight('#ffb36b', .55);
+rim.position.set(60, 80, -320);
+sceneEx.add(rim);
+
+/* street-level entrance pools */
+[[6,7,22,'#ffb27a'],[34,7,9,'#ffc08a'],[-39.5,7,-2,'#ffb982']].forEach(([x,y,z,c])=>{
+  const l = new THREE.PointLight(c, 240, 110, 2);
+  l.position.set(x,y,z);
+  sceneEx.add(l);
+});
+
+/* ground */
+const ground = new THREE.Mesh(
+  new THREE.CircleGeometry(2200, 80),
+  new THREE.MeshStandardMaterial({ color:'#0a111a', roughness:.92, metalness:.08 })
+);
+ground.rotation.x = -Math.PI/2; ground.position.y = -1.4;
+sceneEx.add(ground);
+const plaza = new THREE.Mesh(
+  new THREE.PlaneGeometry(300,300),
+  new THREE.MeshBasicMaterial({ map:glowTexture, transparent:true, opacity:.3, blending:THREE.AdditiveBlending, depthWrite:false })
+);
+plaza.rotation.x = -Math.PI/2; plaza.position.y = -.4;
+sceneEx.add(plaza);
+
+/* distant city */
+const cityGroup = new THREE.Group();
+const CITY_N = coarse ? 900 : 1800;
+{
+  const pos = new Float32Array(CITY_N*3), col = new Float32Array(CITY_N*3);
+  const warm = new THREE.Color('#ffbf7a'), cool = new THREE.Color('#9fc4ff');
+  for (let i=0;i<CITY_N;i++){
+    const r = 420 + Math.pow(Math.random(),.6)*1050;
+    const a = Math.random()*Math.PI*2;
+    pos[i*3] = Math.cos(a)*r;
+    pos[i*3+1] = 1 + Math.pow(Math.random(),2)*70;
+    pos[i*3+2] = Math.sin(a)*r;
+    const c = Math.random()<.68?warm:cool;
+    col[i*3]=c.r*(.5+Math.random()*.5); col[i*3+1]=c.g*(.5+Math.random()*.5); col[i*3+2]=c.b*(.5+Math.random()*.5);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(col,3));
+  const mat = new THREE.PointsMaterial({ size:3.2, map:dotTexture, transparent:true, opacity:.9, vertexColors:true, blending:THREE.AdditiveBlending, depthWrite:false, sizeAttenuation:true });
+  cityGroup.add(new THREE.Points(geo,mat));
+}
+for (let i=0;i<26;i++){
+  const a = Math.random()*Math.PI*2;
+  const r = 520 + Math.random()*760;
+  const w = 18 + Math.random()*46, h = 26 + Math.pow(Math.random(),1.5)*190, d = 18 + Math.random()*46;
+  const box = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), new THREE.MeshBasicMaterial({ color:'#0a1320' }));
+  box.position.set(Math.cos(a)*r, h/2 - 1.4, Math.sin(a)*r);
+  box.rotation.y = Math.random()*Math.PI;
+  cityGroup.add(box);
+}
+sceneEx.add(cityGroup);
+
+/* landmark model */
+const landmarkRoot = new THREE.Group();
+sceneEx.add(landmarkRoot);
+let towerMesh = null;
+const landmarkMeshes = [];
+let windowUniforms = null;
+let windowPoints = null;
+
+function buildWindowLights(mesh, count){
+  mesh.updateWorldMatrix(true, false);
+  const geo = mesh.geometry;
+  const pos = geo.attributes.position;
+  const idx = geo.index;
+  const triCount = (idx ? idx.count : pos.count) / 3;
+  const P = [], S = [], PH = [], W = [];
+  const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3(), p = new THREE.Vector3();
+  const ab = new THREE.Vector3(), ac = new THREE.Vector3(), n = new THREE.Vector3();
+  const ix = (t,k) => idx ? idx.getX(t*3+k) : t*3+k;
+  // area-weighted triangle picking so lights spread evenly across the facade
+  const cum = new Float32Array(triCount);
+  let total = 0;
+  for (let t=0;t<triCount;t++){
+    a.fromBufferAttribute(pos, ix(t,0)); b.fromBufferAttribute(pos, ix(t,1)); c.fromBufferAttribute(pos, ix(t,2));
+    total += ab.copy(b).sub(a).cross(ac.copy(c).sub(a)).length() * .5;
+    cum[t] = total;
+  }
+  let guard = 0;
+  while (P.length/3 < count && guard < count*10 && total > 0){
+    guard++;
+    const r = Math.random()*total;
+    let lo = 0, hi = triCount-1;
+    while (lo < hi){ const mid = (lo+hi)>>1; if (cum[mid] < r) lo = mid+1; else hi = mid; }
+    const t = lo;
+    a.fromBufferAttribute(pos, ix(t,0)); b.fromBufferAttribute(pos, ix(t,1)); c.fromBufferAttribute(pos, ix(t,2));
+    let u = Math.random(), v = Math.random();
+    if (u + v > 1){ u = 1-u; v = 1-v; }
+    p.copy(a).addScaledVector(ab.copy(b).sub(a), u).addScaledVector(ac.copy(c).sub(a), v);
+    p.applyMatrix4(mesh.matrixWorld);
+    if (p.y < 17 || p.y > 268) continue;
+    n.copy(b).sub(a).cross(ac.copy(c).sub(a)).normalize();
+    const out = new THREE.Vector3(p.x, 0, p.z);
+    if (out.lengthSq() > .001 && n.dot(out.normalize()) < 0) n.negate();
+    p.addScaledVector(n, .45);
+    P.push(p.x,p.y,p.z);
+    S.push(1.15 + Math.random()*2.35);
+    PH.push(Math.random()*Math.PI*2);
+    W.push(Math.random()<.7 ? 1 : 0);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(P),3));
+  g.setAttribute('aSize', new THREE.BufferAttribute(new Float32Array(S),1));
+  g.setAttribute('aPhase', new THREE.BufferAttribute(new Float32Array(PH),1));
+  g.setAttribute('aWarm', new THREE.BufferAttribute(new Float32Array(W),1));
+  windowUniforms = { uTime:{ value:0 }, uMap:{ value:dotTexture }, uPower:{ value:1 }, uDpr:{ value:renderer.getPixelRatio() } };
+  const mat = new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false, depthTest:false, blending:THREE.NormalBlending, uniforms:windowUniforms,
+    vertexShader:`
+      attribute float aSize,aPhase,aWarm; uniform float uTime,uDpr; varying float vA; varying float vW;
+      void main(){
+        vec4 mv = modelViewMatrix * vec4(position,1.0);
+        float tw = .55 + .45*sin(uTime*(.5+aPhase*.15)+aPhase*9.0);
+        gl_PointSize = clamp(aSize * (540.0 / max(1.0,-mv.z)), 1.0, 4.2) * uDpr;
+        vA = tw; vW = aWarm;
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader:`
+      uniform sampler2D uMap; uniform float uPower; varying float vA; varying float vW;
+      void main(){
+        vec4 t = texture2D(uMap, gl_PointCoord);
+        vec3 warm = vec3(1.0,.78,.48), cool = vec3(.62,.78,1.0);
+        vec3 col = mix(cool, warm, vW);
+        gl_FragColor = vec4(col * (0.84 + uPower * .14), t.a * vA * .9);
+      }`
+  });
+  windowPoints = new THREE.Points(g, mat);
+  windowPoints.frustumCulled = false;
+  sceneEx.add(windowPoints);
+}
+
+let modelReady = false;
+function loadLandmark(){
+  return new Promise((resolve) => {
+    const loader = new GLTFLoader();
+    loader.load('assets/landmark/source/Landmark%2081.glb', (gltf) => {
+      const root = gltf.scene;
+      root.traverse(o => {
+        if (!o.isMesh) return;
+        const m = o.material;
+        if (!m) return;
+        m.envMapIntensity = m.name === 'weer_AO' ? 1.7 : 1.15;
+        if (m.name === 'lm81'){
+          m.roughness = .38; m.metalness = .22;
+          m.emissive = new THREE.Color('#0b1c2c'); m.emissiveIntensity = .5;
+        }
+        if (m.name === 'weer_AO'){ m.metalness = .85; m.roughness = .3; }
+        if (m.name !== 'lm81' && m.name !== 'weer_AO'){ m.emissive = new THREE.Color('#241c14'); m.emissiveIntensity = .45; m.envMapIntensity = 1.3; }
+        o.castShadow = false; o.receiveShadow = false;
+        landmarkMeshes.push(o);
+        if (m.name === 'weer_AO' && !towerMesh) towerMesh = o;
+      });
+      landmarkRoot.add(root);
+      landmarkRoot.updateWorldMatrix(true, true);
+      if (towerMesh) buildWindowLights(towerMesh, coarse?260:460);
+      modelReady = true;
+      resolve();
+    }, (ev) => {
+      if (ev.total) setLoad(clamp(ev.loaded/ev.total,0,1)*.94);
+    }, (err) => {
+      console.warn('Landmark load failed', err);
+      fail('The landmark model could not be loaded.');
+    });
+  });
+}
+
+/* ---------------- interior scene ---------------- */
+const sceneIn = new THREE.Scene();
+sceneIn.fog = new THREE.Fog('#6a5726', 24, 96);
+const camIn = new THREE.PerspectiveCamera(62, innerWidth/innerHeight, .05, 300);
+const player = { x:-52, z:2.2, yaw:-Math.PI/2, pitch:0, eye:1.55, bob:0, stepAcc:0 };
+const look = { yaw:-Math.PI/2, pitch:0, tyaw:-Math.PI/2, tpitch:0 };
+const keys = new Set();
+const joy = { x:0, z:0, active:false, id:null };
+let interiorRoot = null, interiorBounds = null;
+let colliders = [];
+let interiorPromise = null;
+
+let doorState = { left: null, right: null, angle: 0, targetAngle: 0, isOpen: false };
+let doorwaySpot = null;
+let doorDust = null;
+const doorDustCount = 60;
+let elevatorStation = null;
+
+function buildSwingingExitDoors(baseMat){
+  const mat = baseMat ? baseMat : new THREE.MeshStandardMaterial({
+    color: 0x6e6044,
+    roughness: 0.45,
+    metalness: 0.35
+  });
+  
+  const doorW = 1.04;
+  const doorH = 2.16;
+  const doorD = 0.045;
+  
+  const leftGroup = new THREE.Group();
+  leftGroup.position.set(-50.70, 0, -4.48);
+  
+  const doorGeo = new THREE.BoxGeometry(doorW, doorH, doorD);
+  const leftMesh = new THREE.Mesh(doorGeo, mat);
+  leftMesh.position.set(doorW / 2, doorH / 2, 0);
+  leftMesh.castShadow = true;
+  leftGroup.add(leftMesh);
+  
+  const barMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.85, roughness: 0.25 });
+  const barGeo = new THREE.BoxGeometry(doorW * 0.82, 0.05, 0.06);
+  const leftBar = new THREE.Mesh(barGeo, barMat);
+  leftBar.position.set(doorW / 2, 0.95, 0.038);
+  leftGroup.add(leftBar);
+  
+  const mountGeo = new THREE.BoxGeometry(0.04, 0.08, 0.05);
+  const leftM1 = new THREE.Mesh(mountGeo, barMat);
+  leftM1.position.set(doorW * 0.15, 0.95, 0.03);
+  leftGroup.add(leftM1);
+  const leftM2 = new THREE.Mesh(mountGeo, barMat);
+  leftM2.position.set(doorW * 0.85, 0.95, 0.03);
+  leftGroup.add(leftM2);
+
+  const rightGroup = new THREE.Group();
+  rightGroup.position.set(-48.60, 0, -4.48);
+  
+  const rightMesh = new THREE.Mesh(doorGeo, mat);
+  rightMesh.position.set(-doorW / 2, doorH / 2, 0);
+  rightMesh.castShadow = true;
+  rightGroup.add(rightMesh);
+  
+  const rightBar = new THREE.Mesh(barGeo, barMat);
+  rightBar.position.set(-doorW / 2, 0.95, 0.038);
+  rightGroup.add(rightBar);
+  
+  const rightM1 = new THREE.Mesh(mountGeo, barMat);
+  rightM1.position.set(-doorW * 0.15, 0.95, 0.03);
+  rightGroup.add(rightM1);
+  const rightM2 = new THREE.Mesh(mountGeo, barMat);
+  rightM2.position.set(-doorW * 0.85, 0.95, 0.03);
+  rightGroup.add(rightM2);
+  
+  const exitGlow = new THREE.PointLight(0xff3311, 2.0, 7);
+  exitGlow.position.set(-49.65, 2.3, -4.85);
+  sceneIn.add(exitGlow);
+
+  doorwaySpot = new THREE.SpotLight(0xff4411, 1.0, 9, Math.PI / 4.2, 0.45, 1.2);
+  doorwaySpot.position.set(-49.65, 2.2, -4.8);
+  doorwaySpot.target.position.set(-49.65, 0.1, -1.8);
+  sceneIn.add(doorwaySpot);
+  sceneIn.add(doorwaySpot.target);
+
+  const dustGeo = new THREE.BufferGeometry();
+  const dustPos = new Float32Array(doorDustCount * 3);
+  for (let i = 0; i < doorDustCount; i++) {
+    dustPos[i * 3] = -49.65 + (Math.random() - 0.5) * 3.2;
+    dustPos[i * 3 + 1] = 0.3 + Math.random() * 2.1;
+    dustPos[i * 3 + 2] = -4.5 + Math.random() * 3.8;
+  }
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+  const dustMat = new THREE.PointsMaterial({
+    size: 0.045,
+    color: 0xffaa66,
+    transparent: true,
+    opacity: 0.65,
+    map: dotTexture,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  doorDust = new THREE.Points(dustGeo, dustMat);
+  sceneIn.add(doorDust);
+
+  sceneIn.add(leftGroup);
+  sceneIn.add(rightGroup);
+  
+  doorState = { left: leftGroup, right: rightGroup, angle: 0, targetAngle: 0, isOpen: false };
+}
+
+function buildEndElevatorStation(){
+  const g = new THREE.Group();
+  g.position.set(-5.6, 1.35, 4.0);
+  
+  const plateGeo = new THREE.BoxGeometry(0.24, 0.44, 0.04);
+  const plateMat = new THREE.MeshStandardMaterial({ color: 0xb59a57, metalness: 0.85, roughness: 0.3 });
+  const plate = new THREE.Mesh(plateGeo, plateMat);
+  g.add(plate);
+
+  const screenGeo = new THREE.PlaneGeometry(0.16, 0.08);
+  const screenMat = new THREE.MeshBasicMaterial({ color: 0xffaa33 });
+  const screen = new THREE.Mesh(screenGeo, screenMat);
+  screen.position.set(0, 0.12, 0.022);
+  g.add(screen);
+
+  const btnGeo = new THREE.CylinderGeometry(0.035, 0.035, 0.02, 24);
+  btnGeo.rotateX(Math.PI / 2);
+  const btnMat = new THREE.MeshStandardMaterial({ color: 0xffddaa, emissive: 0xff8822, emissiveIntensity: 0.8 });
+  const btn = new THREE.Mesh(btnGeo, btnMat);
+  btn.position.set(0, -0.06, 0.025);
+  g.add(btn);
+
+  const callLight = new THREE.PointLight(0xffaa44, 1.2, 4);
+  callLight.position.set(0, 0, 0.2);
+  g.add(callLight);
+
+  sceneIn.add(g);
+  elevatorStation = { group: g, button: btn, light: callLight };
+}
+
+function loadInterior(){
+  if (interiorPromise) return interiorPromise;
+  state.interiorLoading = true;
+  interiorPromise = new Promise((resolve, reject) => {
+    const loader = new GLTFLoader();
+    loader.load('assets/backrooms/source/514401d.glb', (gltf) => {
+      interiorRoot = gltf.scene;
+      const box = new THREE.Box3().setFromObject(interiorRoot);
+      interiorBounds = { min:box.min.clone(), max:box.max.clone() };
+      let exitDoorMat = null;
+      interiorRoot.traverse(o => {
+        if (!o.isMesh) return;
+        const name = o.material?.name || '';
+        o.frustumCulled = true;
+        if (o.material) o.material.envMapIntensity = 0;
+        if (name === 'Exit_Door' && !exitDoorMat) {
+          exitDoorMat = o.material.clone();
+        }
+        if (o.name === 'Object_27' || o.name === 'Object_28') {
+          const pos = o.geometry.attributes.position;
+          for (let i = 0; i < pos.count; i++) {
+            const x = pos.getX(i), y = pos.getY(i);
+            if (x > -50.8 && x < -48.5 && y > 4.3 && y < 4.7) {
+              pos.setY(i, -999);
+            }
+          }
+          pos.needsUpdate = true;
+          o.geometry.computeBoundingBox();
+          o.geometry.computeBoundingSphere();
+        }
+        if (/Wall_|Withe|Exit_Door|Window_1|Translucent|Traslucent|Wood|Furniture_1/.test(name)) colliders.push(o);
+      });
+      interiorRoot.updateWorldMatrix(true, true);
+      sceneIn.add(interiorRoot);
+      buildSwingingExitDoors(exitDoorMat);
+      buildEndElevatorStation();
+      state.interiorReady = true; state.interiorLoading = false; state.interiorProgress = 1;
+      setTimeout(() => { try { buildFloorNav(); } catch (e) { console.warn('floor nav unavailable', e); } }, 1200);
+      resolve();
+    }, (ev) => {
+      if (ev.total) {
+        state.interiorProgress = clamp(ev.loaded/ev.total, 0, 1);
+        if (state.busy) $('#veilLabel').textContent = `PREPARING INTERIOR — ${Math.round(state.interiorProgress*100)}%`;
+      }
+    }, (err) => {
+      console.warn('Interior load failed', err);
+      state.interiorLoading = false; interiorPromise = null;
+      reject(err);
+    });
+  });
+  return interiorPromise;
+}
+
+/* ---------------- camera orbit ---------------- */
+const orbit = {
+  az:0.42, elev:-.08, radius:430, targetY:150,
+  azT:0.42, elevT:-.08, radiusT:430, targetYT:150,
+  autoSpeed:.014, dragging:false
+};
+const ORBIT_DEFAULT = { az:.42, elev:-.08, radius:430, targetY:150 };
+let camTween = null;
+
+function tweenCamera(to, dur=1.8){
+  camTween = {
+    from:{ az:orbit.az, elev:orbit.elev, radius:orbit.radius, targetY:orbit.targetY },
+    to:{ az:to.az ?? orbit.az, elev:to.elev ?? orbit.elev, radius:to.radius ?? orbit.radius, targetY:to.targetY ?? orbit.targetY },
+    t0:performance.now(), dur
+  };
+  orbit.azT = camTween.to.az; orbit.elevT = camTween.to.elev;
+  orbit.radiusT = camTween.to.radius; orbit.targetYT = camTween.to.targetY;
+}
+function updateExteriorCamera(dt){
+  if (camTween){
+    const k = clamp((performance.now()-camTween.t0)/camTween.dur, 0, 1);
+    const e = k<.5 ? 4*k*k*k : 1-Math.pow(-2*k+2,3)/2;
+    orbit.az = lerp(camTween.from.az, camTween.to.az, e);
+    orbit.elev = lerp(camTween.from.elev, camTween.to.elev, e);
+    orbit.radius = lerp(camTween.from.radius, camTween.to.radius, e);
+    orbit.targetY = lerp(camTween.from.targetY, camTween.to.targetY, e);
+    if (k>=1) camTween = null;
+  } else if (journey.engaged && !orbit.dragging && !state.busy){
+    updateJourney(dt);
+  } else {
+    if (state.autoOrbit && !orbit.dragging && performance.now()-state.lastInteract > 6000 && state.phase==='exterior' && !state.busy){
+      orbit.azT += orbit.autoSpeed*dt;
+    }
+    const s = 1-Math.exp(-dt*8);
+    orbit.az = lerp(orbit.az, orbit.azT, s);
+    orbit.elev = lerp(orbit.elev, orbit.elevT, s);
+    orbit.radius = lerp(orbit.radius, orbit.radiusT, s);
+    orbit.targetY = lerp(orbit.targetY, orbit.targetYT, s);
+  }
+  const ce = Math.cos(orbit.elev), se = Math.sin(orbit.elev);
+  camEx.position.set(
+    Math.sin(orbit.az)*ce*orbit.radius,
+    orbit.targetY + se*orbit.radius,
+    Math.cos(orbit.az)*ce*orbit.radius
+  );
+  camEx.lookAt(0, orbit.targetY, 0);
+}
+
+/* ---------------- canvas interaction (unified touch swipe & drag look) ---------------- */
+let drag = null;
+let touchGesture = null;
+
+canvas.addEventListener('pointerdown', (e) => {
+  if (state.busy) return;
+  ensureAudio();
+  state.lastInteract = performance.now();
+
+  if (state.phase === 'exterior'){
+    journey.engaged = false;
+    drag = { id:e.pointerId, x:e.clientX, y:e.clientY, azT:orbit.azT, elevT:orbit.elevT, type:'orbit', pointerType:e.pointerType };
+    orbit.dragging = true;
+    canvas.setPointerCapture?.(e.pointerId);
+    return;
+  }
+
+  if (state.phase === 'interior'){
+    const isTouch = e.pointerType === 'touch';
+    touchGesture = {
+      id: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      lastY: e.clientY,
+      mode: isTouch ? 'pending' : 'look',
+      initYaw: look.tyaw,
+      initPitch: look.tpitch
+    };
+    if (!isTouch){
+      if (floorJourney.engaged){
+        floorJourney.engaged = false;
+        floorJourney.speed = 0;
+        state.lastSpawn = { x:player.x, z:player.z, yaw:look.yaw };
+      }
+      drag = { id:e.pointerId, x:e.clientX, y:e.clientY, yaw:look.tyaw, pitch:look.tpitch, type:'look' };
+    }
+    canvas.setPointerCapture?.(e.pointerId);
+  }
+});
+
+canvas.addEventListener('pointermove', (e) => {
+  state.lastInteract = performance.now();
+
+  // Exterior orbit
+  if (drag && drag.id === e.pointerId && state.phase === 'exterior'){
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    orbit.azT = drag.azT - dx * 0.0042;
+    orbit.elevT = clamp(drag.elevT + dy * 0.0026, -0.18, 0.62);
+    return;
+  }
+
+  // Interior unified touch walk / mouse look
+  if (touchGesture && touchGesture.id === e.pointerId && state.phase === 'interior'){
+    const dx = e.clientX - touchGesture.startX;
+    const dy = e.clientY - touchGesture.startY;
+
+    if (touchGesture.mode === 'pending'){
+      if (Math.hypot(dx, dy) > 8){
+        if (Math.abs(dy) > Math.abs(dx) * 1.05){
+          touchGesture.mode = 'walk';
+          touchGesture.lastY = e.clientY;
+        } else {
+          touchGesture.mode = 'look';
+          if (floorJourney.engaged){
+            floorJourney.engaged = false;
+            floorJourney.speed = 0;
+            state.lastSpawn = { x:player.x, z:player.z, yaw:look.yaw };
+          }
+          drag = { id:e.pointerId, x:e.clientX, y:e.clientY, yaw:look.tyaw, pitch:look.tpitch, type:'look' };
+        }
+      }
+    }
+
+    if (touchGesture.mode === 'walk'){
+      const stepY = touchGesture.lastY - e.clientY;
+      touchGesture.lastY = e.clientY;
+      if (Math.abs(stepY) > 1){
+        floorScroll(stepY * 1.6);
+      }
+      return;
+    }
+
+    if (touchGesture.mode === 'look'){
+      look.tyaw = touchGesture.initYaw - dx * 0.0024 * (settingsIn.look || 1);
+      look.tpitch = clamp(touchGesture.initPitch - dy * 0.0024 * (settingsIn.look || 1), -1.1, 1.1);
+      return;
+    }
+  }
+
+  if (drag && drag.id === e.pointerId && drag.type === 'look'){
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    look.tyaw = drag.yaw - dx * 0.0024 * (settingsIn.look || 1);
+    look.tpitch = clamp(drag.pitch - dy * 0.0024 * (settingsIn.look || 1), -1.1, 1.1);
+  }
+});
+
+function endPointer(e){
+  if (drag && (!e || drag.id === e.pointerId)){
+    drag = null;
+    orbit.dragging = false;
+  }
+  if (touchGesture && (!e || touchGesture.id === e.pointerId)){
+    touchGesture = null;
+  }
+  state.lastInteract = performance.now();
+}
+canvas.addEventListener('pointerup', endPointer);
+canvas.addEventListener('pointercancel', endPointer);
+canvas.addEventListener('dblclick', () => { if (state.phase==='exterior') resetOrbit(); });
+
+/* Wheel drives a continuous, scroll-linked journey from the overview through
+   the three entrances. A damped spring trails the scroll target, the camera
+   follows a keyframed path with a gentle pull-back between stops, and the
+   journey settles on the nearest entrance once the wheel goes quiet. */
+const journey = {
+  pos:-1, target:-1, vel:0, step:-1, zoom:1, drift:0, dir:0,
+  engaged:false, blend:0, from:null, snapAt:0
+};
+const journeyKeys = (() => {
+  const keys = [{ az:ORBIT_DEFAULT.az, elev:ORBIT_DEFAULT.elev, radius:ORBIT_DEFAULT.radius, targetY:ORBIT_DEFAULT.targetY }];
+  let prev = ORBIT_DEFAULT.az;
+  ENTRANCES.forEach(e => {
+    let az = e.az - .28;
+    let d = az - prev;
+    while (d > Math.PI) d -= Math.PI*2;
+    while (d < -Math.PI) d += Math.PI*2;
+    prev += d;
+    keys.push({ az:prev, elev:.02, radius:246, targetY:22 });
+  });
+  return keys;
+})();
+function journeySample(p){
+  const n = journeyKeys.length;
+  const q = clamp(p + 1, 0, n - 1);
+  const i = Math.min(n - 2, Math.floor(q));
+  const f = q - i;
+  /* Catmull-Rom keeps the camera's velocity continuous across keyframes,
+     so long scrolls glide through the stops instead of pausing at each one. */
+  const a = journeyKeys[Math.max(0, i - 1)];
+  const b = journeyKeys[i], c = journeyKeys[i + 1];
+  const d = journeyKeys[Math.min(n - 1, i + 2)];
+  const f2 = f*f, f3 = f2*f;
+  const cr = (v0, v1, v2, v3) => .5 * (2*v1 + (v2 - v0)*f + (2*v0 - 5*v1 + 4*v2 - v3)*f2 + (3*v1 - v0 - 3*v2 + v3)*f3);
+  const bulge = reduced ? 0 : Math.sin(Math.PI*f) * 84;
+  return {
+    az: cr(a.az, b.az, c.az, d.az) + journey.drift,
+    elev: cr(a.elev, b.elev, c.elev, d.elev),
+    radius: (cr(a.radius, b.radius, c.radius, d.radius) + bulge) * journey.zoom,
+    targetY: cr(a.targetY, b.targetY, c.targetY, d.targetY) + (reduced ? 0 : Math.sin(Math.PI*f) * 8)
+  };
+}
+function updateJourneyCue(stop){
+  const label = $('#journeyLabel');
+  if (label) label.textContent = stop < 0 ? 'Scroll · Overview' : `Scroll · ${ENTRANCES[stop].num} ${ENTRANCES[stop].name}`;
+  const ticks = $$('#journeyTicks i');
+  ticks.forEach((t,i) => {
+    t.classList.toggle('is-on', i === stop + 1);
+    t.classList.toggle('is-past', i < stop + 1);
+  });
+}
+function syncJourneyStop(stop){
+  journey.step = stop;
+  if (stop >= 0) state.selectedEntrance = stop;
+  renderEntries();
+  updatePins(true);
+  updateJourneyCue(stop);
+  writeRoute();
+}
+function engageJourney(){
+  if (journey.engaged || state.busy) return;
+  journey.from = { az:orbit.az, elev:orbit.elev, radius:orbit.radius, targetY:orbit.targetY };
+  journey.engaged = true;
+  journey.blend = 0;
+  state.lastInteract = performance.now();
+  camTween = null;
+}
+function zoomBy(f){
+  journey.zoom = clamp(journey.zoom * f, .6, 1.7);
+  if (!journey.engaged){
+    orbit.radiusT = clamp(orbit.radiusT * f, 170, 900);
+    camTween = null;
+  }
+  state.lastInteract = performance.now();
+}
+function scrollsNatively(t, dy){
+  if ($('#about').classList.contains('is-on')) return true;
+  const el = t && t.closest ? t.closest('.entry-panel, .dock__body, .about__card') : null;
+  if (!el) return false;
+  const max = el.scrollHeight - el.clientHeight;
+  if (max <= 2) return false;
+  /* the panel scrolls until it hits the edge, then the wheel chains to the
+     journey — otherwise a panel that covers half the screen swallows the scroll */
+  if (dy > 0) return el.scrollTop < max - 2;
+  return el.scrollTop > 2;
+}
+window.addEventListener('wheel', (e) => {
+  if (state.phase !== 'exterior' && state.phase !== 'interior') return;
+  const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? innerHeight : 1;
+  const dx = e.deltaX * unit;
+  const dy = e.deltaY * unit;
+  if (e.ctrlKey || e.metaKey){
+    if (state.busy) return;
+    e.preventDefault();
+    if (state.phase === 'exterior'){ ensureAudio(); zoomBy(1 + dy*.0014); }
+    return;
+  }
+  if (scrollsNatively(e.target, dy)) return;
+  e.preventDefault();
+  if (state.busy) return;
+  state.lastInteract = performance.now();
+  /* Only vertical intent travels the journey. Pure left/right trackpad
+     swipes (and diagonal noise where X dominates) never rotate the camera. */
+  if (Math.abs(dy) < 2) return;
+  if (Math.abs(dx) > Math.abs(dy) * .9) return;
+  ensureAudio();
+  if (state.phase === 'interior'){ floorScroll(dy); return; }
+  engageJourney();
+  if (!journey.engaged) return;
+  journey.dir = Math.sign(dy);
+  /* ~380px of vertical scroll per entrance. The target keeps small partial
+     amounts so repeated notches stack smoothly, then the gesture settles. */
+  journey.target = clamp(journey.target + dy/380, -1, ENTRANCES.length - 1);
+  journey.snapAt = performance.now() + 260;
+  const stop = Math.round(journey.target);
+  if (stop !== journey.step) syncJourneyStop(stop);
+}, { passive:false });
+function updateJourney(dt){
+  const now = performance.now();
+  if (journey.snapAt && now > journey.snapAt){
+    /* Commit the gesture in its own direction so one wheel notch always
+       reaches the next entrance instead of wobbling back. */
+    const bias = journey.dir > 0 ? .35 : -.35;
+    journey.target = clamp(Math.round(journey.target + bias), -1, ENTRANCES.length - 1);
+    journey.snapAt = 0;
+    const stop = Math.round(journey.target);
+    if (stop !== journey.step) syncJourneyStop(stop);
+  }
+  /* Fixed-step critically-damped spring: identical easing at 30, 60 or
+     144 fps, so the glide stays silky even when frames are uneven. */
+  const k = reduced ? 80 : 26;
+  const damp = reduced ? 22 : 10;
+  let remaining = Math.min(dt, .1);
+  while (remaining > 1e-4){
+    const h = Math.min(1/120, remaining);
+    journey.vel += (journey.target - journey.pos) * k * h;
+    journey.vel *= Math.exp(-damp * h);
+    journey.pos += journey.vel * h;
+    remaining -= h;
+  }
+  if (Math.abs(journey.target - journey.pos) < .0008 && Math.abs(journey.vel) < .004){
+    journey.pos = journey.target; journey.vel = 0;
+  }
+  journey.pos = clamp(journey.pos, -1.01, ENTRANCES.length - 1 + .01);
+  if (state.autoOrbit && performance.now() - state.lastInteract > 7000){
+    journey.drift += orbit.autoSpeed * dt * .7;
+  } else {
+    journey.drift *= Math.exp(-dt * 1.6);
+  }
+  journey.blend = Math.min(1, journey.blend + dt*3);
+  const e = journey.blend*journey.blend*(3-2*journey.blend);
+  const s = journeySample(journey.pos);
+  orbit.az = orbit.azT = lerp(journey.from.az, s.az, e);
+  orbit.elev = orbit.elevT = lerp(journey.from.elev, s.elev, e);
+  orbit.radius = orbit.radiusT = lerp(journey.from.radius, s.radius, e);
+  orbit.targetY = orbit.targetYT = lerp(journey.from.targetY, s.targetY, e);
+}
+
+function resetOrbit(){
+  journey.zoom = 1;
+  journey.target = -1;
+  journey.dir = 0;
+  journey.snapAt = 0;
+  journey.drift = 0;
+  state.lastInteract = performance.now();
+  engageJourney();
+  state.selectedEntrance = 0;
+  syncJourneyStop(-1);
+  toast('Overview — scroll down to begin at the first entrance.');
+}
+
+/* ---------------- UI: entrances ---------------- */
+function renderEntries(){
+  const isIn = state.phase === 'interior';
+  const data = isIn ? THRESHOLDS : ENTRANCES;
+  const sel = isIn ? state.selectedThreshold : state.selectedEntrance;
+  const listEl = isIn ? $('#entryListInterior') : $('#entryListExterior');
+  listEl.innerHTML = '';
+  data.forEach((d, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'entry-row' + (i===sel?' is-active':'');
+    b.setAttribute('aria-pressed', String(i===sel));
+    b.innerHTML = `<span class="num">${d.num}</span><span class="txt"><b>${d.name}</b><i>${d.short}</i></span><span class="arrow">→</span>`;
+    b.addEventListener('click', () => {
+      audio.click();
+      if (isIn) {
+        selectThreshold(i, true);
+      } else {
+        if (state.selectedEntrance === i) {
+          enterBuilding(i);
+        } else {
+          selectEntrance(i);
+        }
+      }
+    });
+    b.addEventListener('dblclick', () => {
+      if (!isIn) enterBuilding(i);
+    });
+    listEl.appendChild(b);
+  });
+  if (isIn){
+    const d = data[sel];
+    $('#inTag').textContent = `Threshold ${d.num} · ${d.zone}`;
+    $('#inName').textContent = d.name;
+    $('#inDesc').textContent = d.desc;
+    $('#inFact').textContent = d.fact;
+  } else {
+    const d = data[sel];
+    $('#exTag').textContent = `Entrance ${d.num} · ${d.face}`;
+    $('#exName').textContent = d.name;
+    $('#exDesc').textContent = d.desc;
+    $('#exFact').textContent = d.fact;
+  }
+  if (isIn) requestAnimationFrame(placeJoystick);
+}
+function selectEntrance(i, focus=true){
+  state.selectedEntrance = i;
+  syncJourneyStop(i);
+  if (focus && state.phase==='exterior' && !state.busy){
+    journey.target = i;
+    journey.snapAt = 0;
+    state.lastInteract = performance.now();
+    engageJourney();
+  }
+}
+function selectThreshold(i, walk=false){
+  state.selectedThreshold = i;
+  renderEntries();
+  updatePins(true);
+  updateFloorCue(i);
+  writeRoute();
+  if (state.phase === 'interior' && !state.busy){
+    const spawn = THRESHOLDS[i].spawn;
+    const here = Math.hypot(player.x-spawn.x, player.z-spawn.z) < .35;
+    if (walk || i !== floorJourney.step || !here){
+      floorJourney.targetF = i;
+      floorJourney.dir = i >= floorJourney.step ? 1 : -1;
+      startFloorPlan(i, true);
+    }
+  }
+}
+
+/* ---------------- pins ---------------- */
+const pinEls = { exterior:[], interior:[] };
+
+function buildPins(){
+  const defs = [
+    { key:'exterior', host:$('#pinsExterior'), data:ENTRANCES, click:(i)=>{ audio.click(); enterBuilding(i); } },
+    { key:'interior', host:$('#pinsInterior'), data:THRESHOLDS, click:(i)=>{ audio.click(); selectThreshold(i, true); } }
+  ];
+  defs.forEach(({ key, host, data, click }) => {
+    host.innerHTML = '';
+    pinEls[key] = data.map((d,i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'pin';
+      const ctaText = key === 'exterior' ? 'Click to enter →' : 'Walk to threshold →';
+      b.innerHTML = `<span class="pin__stem"></span><span class="pin__dot">${d.num}</span><span class="pin__text"><b>${d.name}</b><i>${d.zone || d.face}</i><span class="pin__cta">${ctaText}</span></span>`;
+      b.setAttribute('aria-label', `${key === 'exterior' ? 'Entrance' : 'Threshold'} ${d.num}: ${d.name} — ${ctaText}`);
+      b.addEventListener('click', () => click(i));
+      host.appendChild(b);
+      return b;
+    });
+  });
+}
+const proj = new THREE.Vector3();
+const ray = new THREE.Raycaster();
+const occ = { exterior:[false,false,false], interior:[false,false,false] };
+let occTimer = 0;
+function updatePins(force=false){
+  const isIn = state.phase === 'interior';
+  const key = isIn ? 'interior' : 'exterior';
+  const data = isIn ? THRESHOLDS : ENTRANCES;
+  const cam = isIn ? camIn : camEx;
+  const list = pinEls[key] || [];
+  const now = performance.now();
+  if (force || now - occTimer > 220){
+    occTimer = now;
+    data.forEach((d,i) => {
+      const anchor = new THREE.Vector3(...d.anchor);
+      const toA = anchor.clone().sub(cam.position);
+      const dist = toA.length();
+      ray.set(cam.position, toA.normalize());
+      ray.far = Math.max(.1, dist-1.2);
+      const targets = isIn ? colliders : landmarkMeshes;
+      occ[key][i] = ray.intersectObjects(targets, false).length > 0;
+    });
+  }
+  data.forEach((d,i) => {
+    const el = list[i]; if (!el) return;
+    proj.set(d.anchor[0], d.anchor[1], d.anchor[2]).project(cam);
+    const visible = proj.z > -1 && proj.z < 1 && Math.abs(proj.x) < 1.15 && Math.abs(proj.y) < 1.15;
+    const x = (proj.x*.5+.5)*innerWidth;
+    const y = (-proj.y*.5+.5)*innerHeight;
+    el.style.left = x+'px'; el.style.top = y+'px';
+    el.classList.toggle('is-on', visible);
+    el.classList.toggle('is-behind', occ[key][i] || !visible);
+    const selected = isIn ? state.selectedThreshold===i : state.selectedEntrance===i;
+    el.classList.toggle('is-active', selected);
+    const distLabel = el.querySelector('.pin__text i');
+    if (distLabel) distLabel.textContent = isIn ? `${d.zone} · ${Math.max(1,Math.round(cam.position.distanceTo(new THREE.Vector3(...d.anchor))))} m` : d.face;
+  });
+}
+
+/* ---------------- interior player ---------------- */
+function bindKeys(){
+  addEventListener('keydown', (e) => {
+    if (e.target.matches('input,textarea')) return;
+    const k = e.key.toLowerCase();
+    if (k === 'escape'){
+      if ($('#about').classList.contains('is-on')) closeAbout();
+      return;
+    }
+    if (state.phase === 'interior' && !state.busy){
+      if (['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright','shift'].includes(k)) {
+        keys.add(k); e.preventDefault();
+      }
+      if (k === 'e'){
+        const liftCta = $('#liftCta');
+        if (liftCta && liftCta.classList.contains('is-visible')){
+          e.preventDefault();
+          takeExpressLift();
+          return;
+        }
+      }
+      if (k === '1' || k === '2' || k === '3') selectThreshold(Number(k)-1, true);
+    } else if (state.phase === 'exterior' && !state.busy){
+      if (k === '1' || k === '2' || k === '3'){
+        const idx = Number(k) - 1;
+        if (state.selectedEntrance === idx){
+          enterBuilding(idx);
+        } else {
+          selectEntrance(idx);
+        }
+      } else if (k === 'enter'){
+        enterBuilding(state.selectedEntrance);
+      }
+    }
+  });
+  addEventListener('keyup', (e) => keys.delete(e.key.toLowerCase()));
+  addEventListener('blur', () => keys.clear());
+}
+
+function collides(nx, nz){
+  if (doorState.angle > 0.35 && nx > -50.7 && nx < -48.6 && nz < -3.8 && nz > -5.3) {
+    return false;
+  }
+  const dx = nx-player.x, dz = nz-player.z;
+  const len = Math.hypot(dx,dz);
+  if (len < 1e-5) return false;
+  ray.set(new THREE.Vector3(player.x, 1.05, player.z), new THREE.Vector3(dx/len,0,dz/len));
+  ray.far = len + .34;
+  const hits = ray.intersectObjects(colliders, false);
+  return hits.length > 0;
+}
+function updateInterior(dt){
+  const manual = keys.has('w')||keys.has('a')||keys.has('s')||keys.has('d')||keys.has('arrowup')||keys.has('arrowdown')||keys.has('arrowleft')||keys.has('arrowright')||Math.abs(joy.x)>.08||Math.abs(joy.z)>.08;
+  if (manual && floorJourney.engaged){
+    floorJourney.engaged = false;
+    floorJourney.speed = 0;
+    state.lastSpawn = { x:player.x, z:player.z, yaw:look.yaw };
+  }
+  const gliding = floorJourney.engaged && !state.busy;
+  if (gliding) updateFloorJourney(dt);
+  const sprint = keys.has('shift');
+  const speed = (manual ? (sprint?3.7:2.15) : 0) * (settingsIn.speed||1);
+
+  let vx = 0, vz = 0;
+  if (!gliding){
+    let f = 0, r = 0;
+    if (keys.has('w')||keys.has('arrowup')) f += 1;
+    if (keys.has('s')||keys.has('arrowdown')) f -= 1;
+    if (keys.has('d')||keys.has('arrowright')) r += 1;
+    if (keys.has('a')||keys.has('arrowleft')) r -= 1;
+    f += -joy.z; r += joy.x;
+    const mag = Math.hypot(f,r) || 1;
+    f/=mag; r/=mag;
+
+    const fx = -Math.sin(look.yaw), fz = -Math.cos(look.yaw);
+    const rx = Math.cos(look.yaw), rz = -Math.sin(look.yaw);
+    vx = (fx*f + rx*r)*speed*dt;
+    vz = (fz*f + rz*r)*speed*dt;
+
+    if (vx || vz){
+      if (collides(player.x+vx, player.z)) vx = 0;
+      if (collides(player.x, player.z+vz)) vz = 0;
+      player.x += vx; player.z += vz;
+      if (interiorBounds){
+        player.x = clamp(player.x, interiorBounds.min.x+1, interiorBounds.max.x-1);
+        player.z = clamp(player.z, interiorBounds.min.z+1, interiorBounds.max.z-1);
+      }
+      state.lastSpawn = { x:player.x, z:player.z, yaw:look.yaw };
+    }
+  }
+
+  const actualSpeed = gliding ? Math.min(floorJourney.speed, 4.5) : Math.hypot(vx,vz)/Math.max(dt,1e-4);
+  state.walkSpeed = actualSpeed;
+  if (actualSpeed > .2){
+    player.bob += dt * (sprint?10.5:7.4) * (settingsIn.speed||1);
+    player.stepAcc += actualSpeed*dt;
+    if (player.stepAcc > (sprint?1.55:1.25)){ player.stepAcc = 0; audio.step(actualSpeed); }
+  } else {
+    player.bob += dt*1.2;
+    player.stepAcc = 0;
+  }
+
+  const s = 1-Math.exp(-dt*(gliding ? 6.5 : 12));
+  look.yaw = lerp(look.yaw, look.tyaw, s);
+  look.pitch = lerp(look.pitch, look.tpitch, s);
+  player.yaw = look.yaw; player.pitch = look.pitch;
+  const bob = Math.abs(Math.sin(player.bob)) * (actualSpeed>.2 ? .016 : .002);
+  camIn.position.set(player.x, player.eye + bob, player.z);
+  camIn.rotation.set(look.pitch, look.yaw, 0, 'YXZ');
+
+  // Interactive exit door opening, volumetric beam, and dynamic neon hum
+  if (doorState.left && doorState.right) {
+    const distToExit = Math.hypot(player.x - (-49.65), player.z - (-4.48));
+    const nearDoor = distToExit < 6.2;
+    doorState.targetAngle = nearDoor ? clamp((6.2 - distToExit) / 4.5, 0.2, 1) * (Math.PI * 0.46) : 0;
+    if (nearDoor && !doorState.isOpen) {
+      doorState.isOpen = true;
+      audio.door();
+    } else if (!nearDoor && doorState.isOpen) {
+      doorState.isOpen = false;
+    }
+    doorState.angle = lerp(doorState.angle, doorState.targetAngle, Math.min(dt * 4.5, 1));
+    doorState.left.rotation.y = -doorState.angle;
+    doorState.right.rotation.y = doorState.angle;
+
+    if (doorwaySpot) {
+      doorwaySpot.intensity = 0.5 + (doorState.angle / (Math.PI * 0.46)) * 4.0;
+    }
+  }
+
+  // Animate dust particles in doorway
+  if (doorDust) {
+    const pos = doorDust.geometry.attributes.position;
+    const t = state.time * 0.5;
+    for (let i = 0; i < doorDustCount; i++) {
+      let y = pos.getY(i) + Math.sin(t + i * 1.3) * 0.002;
+      if (y > 2.3) y = 0.4;
+      if (y < 0.4) y = 2.3;
+      pos.setY(i, y);
+    }
+    doorDust.geometry.attributes.position.needsUpdate = true;
+  }
+
+  // End of corridor elevator station check
+  if (elevatorStation) {
+    const distToLift = Math.hypot(player.x - (-5.6), player.z - 4.0);
+    const nearLift = distToLift < 4.2;
+    const liftCta = $('#liftCta');
+    if (liftCta) {
+      liftCta.classList.toggle('is-visible', nearLift);
+    }
+  }
+
+  // zone label + minimap
+  const zone = player.x > -20 ? 'East corridor' : player.x > -40 ? 'Central hall' : player.x > -58 ? 'Reception hall' : 'West lounge';
+  $('#innerZone').textContent = `${zone} · level 0`;
+  const mm = $('#mmDot'), mmDir = $('#mmDir');
+  if (interiorBounds && mm){
+    const bx = (player.x - interiorBounds.min.x)/(interiorBounds.max.x - interiorBounds.min.x);
+    const bz = (player.z - interiorBounds.min.z)/(interiorBounds.max.z - interiorBounds.min.z);
+    const mx = 10 + bx*282, my = 12 + bz*68;
+    mm.setAttribute('cx', mx.toFixed(1)); mm.setAttribute('cy', my.toFixed(1));
+    const hx = -Math.sin(look.yaw), hz = -Math.cos(look.yaw);
+    mmDir.setAttribute('x1', mx.toFixed(1)); mmDir.setAttribute('y1', my.toFixed(1));
+    mmDir.setAttribute('x2', (mx + hx*7).toFixed(1)); mmDir.setAttribute('y2', (my + hz*7).toFixed(1));
+    const th = THRESHOLDS[state.selectedThreshold];
+    if (th) $('#mmDist').textContent = `${Math.max(1,Math.round(Math.hypot(player.x-th.spawn.x, player.z-th.spawn.z)))} m`;
+  }
+}
+
+function teleportTo(spawn){
+  if (state.busy) return;
+  state.busy = true;
+  floorJourney.engaged = false;
+  $('#veilLabel').textContent = '';
+  $('#veil').classList.add('is-on');
+  audio.click();
+  setTimeout(() => {
+    player.x = spawn.x; player.z = spawn.z;
+    look.yaw = spawn.yaw; look.tyaw = spawn.yaw; look.pitch = 0; look.tpitch = 0;
+    state.lastSpawn = { ...spawn };
+    floorJourney.pos = null;
+    setTimeout(() => { $('#veil').classList.remove('is-on'); state.busy = false; }, 260);
+  }, 380);
+}
+
+/* ---------------- interior scroll journey ----------------
+   Scrolling travels the level between the three thresholds. Positions are
+   planned on a coarse occupancy grid built from the collider meshes, so the
+   eye-height dolly follows the corridors instead of cutting through walls.
+   A speed-capped, fixed-step damped spring drives the travel distance. */
+const floorJourney = {
+  s:0, len:0, v:0, speed:0, engaged:false, targetF:0, planTarget:-1, step:0, origin:0,
+  dir:0, snapAt:0, pos:null, cum:null, targetS:0, settled:true, latchUntil:0, scrollAcc:0, hasLeftOrigin:false
+};
+let floorNav = null;
+
+const angleDelta = (a,b) => { let d = b-a; while (d > Math.PI) d -= Math.PI*2; while (d < -Math.PI) d += Math.PI*2; return d; };
+
+function buildFloorNav(){
+  if (floorNav) return floorNav;
+  if (!colliders.length) return null;
+  const res = .25, pad = 40;
+  let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+  THRESHOLDS.forEach(t => {
+    minX = Math.min(minX, t.spawn.x); maxX = Math.max(maxX, t.spawn.x);
+    minZ = Math.min(minZ, t.spawn.z); maxZ = Math.max(maxZ, t.spawn.z);
+  });
+  minX -= pad; maxX += pad; minZ -= pad; maxZ += pad;
+  if (interiorBounds){
+    minX = Math.max(minX, interiorBounds.min.x); maxX = Math.min(maxX, interiorBounds.max.x);
+    minZ = Math.max(minZ, interiorBounds.min.z); maxZ = Math.min(maxZ, interiorBounds.max.z);
+  }
+  const nx = Math.max(4, Math.ceil((maxX-minX)/res));
+  const nz = Math.max(4, Math.ceil((maxZ-minZ)/res));
+  if (nx*nz > 400000) return null;
+  const raw = new Uint8Array(nx*nz);
+
+  const mark = (x1,z1,x2,z2) => {
+    const d = Math.hypot(x2-x1, z2-z1);
+    const n = Math.max(1, Math.ceil(d/(res*.6)));
+    for (let i=0;i<=n;i++){
+      const x = x1 + (x2-x1)*(i/n), z = z1 + (z2-z1)*(i/n);
+      const cx = Math.floor((x-minX)/res), cz = Math.floor((z-minZ)/res);
+      if (cx>=0 && cx<nx && cz>=0 && cz<nz) raw[cz*nx+cx] = 1;
+    }
+  };
+  const va = new THREE.Vector3(), vb = new THREE.Vector3(), vc = new THREE.Vector3();
+  const ab = new THREE.Vector3(), ac = new THREE.Vector3(), nrm = new THREE.Vector3();
+  const floorY = interiorBounds ? interiorBounds.min.y : null;
+  colliders.forEach(o => {
+    o.updateWorldMatrix(true, true);
+    const geo = o.geometry;
+    const pa = geo && geo.attributes && geo.attributes.position;
+    if (!pa) return;
+    const index = geo.index, m = o.matrixWorld;
+    const triCount = Math.floor((index ? index.count : pa.count)/3);
+    const read = (vi, out) => out.set(pa.getX(vi), pa.getY(vi), pa.getZ(vi)).applyMatrix4(m);
+    for (let t=0;t<triCount;t++){
+      const ia = index ? index.getX(t*3) : t*3;
+      const ib = index ? index.getX(t*3+1) : t*3+1;
+      const ic = index ? index.getX(t*3+2) : t*3+2;
+      read(ia, va); read(ib, vb); read(ic, vc);
+      const cy = (va.y+vb.y+vc.y)/3;
+      /* Only geometry that actually blocks a walker: door headers and
+         ceilings sit high and must not seal the openings below them. */
+      if (floorY !== null && (cy < floorY + .25 || cy > floorY + 2.25)) continue;
+      ab.subVectors(vb, va); ac.subVectors(vc, va); nrm.crossVectors(ab, ac);
+      if (Math.abs(nrm.y) > Math.hypot(nrm.x, nrm.z) * 1.6) continue; // floors/ceilings do not block
+      mark(va.x, va.z, vb.x, vb.z);
+      mark(vb.x, vb.z, vc.x, vc.z);
+      mark(vc.x, vc.z, va.x, va.z);
+    }
+  });
+  /* one-cell clearance so the camera never hugs a wall */
+  const blocked = new Uint8Array(nx*nz);
+  for (let z=0;z<nz;z++) for (let x=0;x<nx;x++){
+    if (!raw[z*nx+x]) continue;
+    for (let dz=-1;dz<=1;dz++) for (let dx=-1;dx<=1;dx++){
+      const xx = x+dx, zz = z+dz;
+      if (xx>=0 && xx<nx && zz>=0 && zz<nz) blocked[zz*nx+xx] = 1;
+    }
+  }
+  floorNav = { res, minX, minZ, nx, nz, blocked };
+  return floorNav;
+}
+
+function navFree(nav, cx, cz){
+  return cx>0 && cz>0 && cx<nav.nx-1 && cz<nav.nz-1 && !nav.blocked[cz*nav.nx+cx];
+}
+function nearestFree(nav, cx, cz){
+  for (let r=0;r<=48;r++){
+    for (let dz=-r;dz<=r;dz++) for (let dx=-r;dx<=r;dx++){
+      if (Math.max(Math.abs(dx), Math.abs(dz)) !== r) continue;
+      if (navFree(nav, cx+dx, cz+dz)) return { cx:cx+dx, cz:cz+dz };
+    }
+  }
+  return null;
+}
+function navLineFree(nav, ax, az, bx, bz){
+  const d = Math.hypot(bx-ax, bz-az);
+  const n = Math.max(1, Math.ceil(d/(nav.res*.5)));
+  for (let i=0;i<=n;i++){
+    const x = ax + (bx-ax)*i/n, z = az + (bz-az)*i/n;
+    const cx = Math.floor((x-nav.minX)/nav.res), cz = Math.floor((z-nav.minZ)/nav.res);
+    if (!navFree(nav, cx, cz)) return false;
+  }
+  return true;
+}
+function simplifyNav(nav, pts){
+  const out = [pts[0]];
+  let i = 0;
+  while (i < pts.length-1){
+    let j = pts.length-1;
+    while (j > i+1 && !navLineFree(nav, pts[i].x, pts[i].z, pts[j].x, pts[j].z)) j--;
+    out.push(pts[j]); i = j;
+  }
+  return out;
+}
+function planFloorPath(a, b, diag){
+  const nav = buildFloorNav();
+  if (!nav){ if (diag) diag.reason = 'no-nav'; return [{ x:a.x, z:a.z }, { x:b.x, z:b.z }]; }
+  const W = nav.nx, H = nav.nz;
+  const cxOf = x => clamp(Math.floor((x-nav.minX)/nav.res), 0, W-1);
+  const czOf = z => clamp(Math.floor((z-nav.minZ)/nav.res), 0, H-1);
+  const s0 = nearestFree(nav, cxOf(a.x), czOf(a.z));
+  const g0 = nearestFree(nav, cxOf(b.x), czOf(b.z));
+  if (diag) diag.cells = { sx:cxOf(a.x), sz:czOf(a.z), gx:cxOf(b.x), gz:czOf(b.z), s0, g0 };
+  if (!s0 || !g0){ if (diag) diag.reason = 'no-free-endpoint'; return [{ x:a.x, z:a.z }, { x:b.x, z:b.z }]; }
+  const total = W*H;
+  const gScore = new Float32Array(total).fill(Infinity);
+  const from = new Int32Array(total).fill(-1);
+  const closed = new Uint8Array(total);
+  const goal = g0.cz*W + g0.cx;
+  const heur = idx => {
+    const dx = Math.abs(idx%W - g0.cx), dz = Math.abs(((idx/W)|0) - g0.cz);
+    return Math.max(dx,dz) + .4142*Math.min(dx,dz);
+  };
+  const heap = [];
+  const push = (i,f) => {
+    heap.push({ i, f });
+    let n = heap.length-1;
+    while (n>0){ const p=(n-1)>>1; if (heap[p].f <= heap[n].f) break; [heap[p],heap[n]]=[heap[n],heap[p]]; n=p; }
+  };
+  const pop = () => {
+    const top = heap[0], last = heap.pop();
+    if (heap.length){
+      heap[0] = last;
+      let n = 0;
+      for (;;){
+        const l=n*2+1, r=l+1; let s=n;
+        if (l<heap.length && heap[l].f<heap[s].f) s=l;
+        if (r<heap.length && heap[r].f<heap[s].f) s=r;
+        if (s===n) break;
+        [heap[s],heap[n]]=[heap[n],heap[s]]; n=s;
+      }
+    }
+    return top;
+  };
+  const start = s0.cz*W + s0.cx;
+  gScore[start] = 0;
+  push(start, heur(start));
+  let found = false, expanded = 0;
+  while (heap.length){
+    const cur = pop();
+    if (closed[cur.i]) continue;
+    if (cur.i === goal){ found = true; break; }
+    closed[cur.i] = 1;
+    expanded++;
+    const cx = cur.i%W, cz = (cur.i/W)|0;
+    for (let dz=-1;dz<=1;dz++) for (let dx=-1;dx<=1;dx++){
+      if (!dx && !dz) continue;
+      const nx2 = cx+dx, nz2 = cz+dz;
+      if (!navFree(nav, nx2, nz2)) continue;
+      if (dx && dz && (!navFree(nav, cx+dx, cz) || !navFree(nav, cx, cz+dz))) continue;
+      const ni = nz2*W + nx2;
+      if (closed[ni]) continue;
+      const ng = gScore[cur.i] + (dx && dz ? 1.4142 : 1);
+      if (ng < gScore[ni]){
+        gScore[ni] = ng; from[ni] = cur.i;
+        push(ni, ng + heur(ni));
+      }
+    }
+  }
+  if (diag){ diag.found = found; diag.expanded = expanded; }
+  if (!found) return [{ x:a.x, z:a.z }, { x:b.x, z:b.z }];
+  const cells = [];
+  let idx = goal;
+  while (idx !== -1){
+    cells.push({ x: nav.minX + ((idx%W)+.5)*nav.res, z: nav.minZ + (((idx/W)|0)+.5)*nav.res });
+    if (idx === start) break;
+    idx = from[idx];
+  }
+  cells.reverse();
+  cells[0] = { x:a.x, z:a.z };
+  cells[cells.length-1] = { x:b.x, z:b.z };
+  return simplifyNav(nav, cells);
+}
+function setFloorPlan(pts){
+  const fj = floorJourney, cum = [0];
+  let len = 0;
+  for (let i=1;i<pts.length;i++){
+    len += Math.hypot(pts[i].x-pts[i-1].x, pts[i].z-pts[i-1].z);
+    cum.push(len);
+  }
+  fj.pos = pts; fj.cum = cum; fj.len = len; fj.s = 0; fj.v = 0; fj.targetS = 0;
+}
+function floorSample(s){
+  const fj = floorJourney, pts = fj.pos, cum = fj.cum;
+  if (!pts || pts.length < 2) return { x:player.x, z:player.z, tx:0, tz:-1 };
+  s = clamp(s, 0, fj.len);
+  let lo = 0, hi = cum.length-1;
+  while (lo < hi-1){ const mid=(lo+hi)>>1; if (cum[mid] <= s) lo=mid; else hi=mid; }
+  const a = pts[lo], b = pts[Math.min(lo+1, pts.length-1)];
+  const seg = Math.max(1e-5, cum[lo+1]-cum[lo]);
+  const t = clamp((s-cum[lo])/seg, 0, 1);
+  return { x:lerp(a.x,b.x,t), z:lerp(a.z,b.z,t), tx:(b.x-a.x)/seg, tz:(b.z-a.z)/seg };
+}
+function startFloorPlan(i, autoWalk=false){
+  const fj = floorJourney;
+  const spawn = THRESHOLDS[i].spawn;
+  const near = Math.hypot(player.x-spawn.x, player.z-spawn.z) < .35;
+  setFloorPlan(near ? [{ x:player.x, z:player.z }, { x:spawn.x, z:spawn.z }] : planFloorPath({ x:player.x, z:player.z }, spawn));
+  if (near) fj.len = 0;
+  fj.origin = fj.step >= 0 ? fj.step : state.selectedThreshold;
+  fj.planTarget = i;
+  fj.engaged = true;
+  fj.settled = false;
+  fj.hasLeftOrigin = false;
+  fj.scrollAcc = 0;
+  fj.snapAt = 0;
+  fj.s = 0;
+  fj.v = 0;
+  fj.targetS = autoWalk ? fj.len : 0;
+  if (autoWalk){
+    if (fj.step !== i) syncFloorStop(i);
+  }
+}
+function floorScroll(dy){
+  const fj = floorJourney;
+  const now = performance.now();
+  const forward = dy > 0;
+  const currentStep = fj.step >= 0 ? fj.step : state.selectedThreshold;
+
+  // When resting at a floor stop, check for new scroll intent to embark on adjacent floor
+  if (fj.settled){
+    if (now < fj.latchUntil) return;
+    if (forward && currentStep >= THRESHOLDS.length - 1) return;
+    if (!forward && currentStep <= 0) return;
+
+    // Embark toward the next/previous threshold
+    fj.dir = forward ? 1 : -1;
+    const targetIdx = forward ? currentStep + 1 : currentStep - 1;
+    startFloorPlan(targetIdx, false);
+  }
+
+  // Active walking along path
+  if (!fj.pos || fj.len <= 0) return;
+
+  // Brisk, responsive scroll delta (~0.85m per notch)
+  const cappedDy = clamp(dy, -80, 80);
+  const stepDelta = (Math.abs(cappedDy) / 100) * 0.85;
+  const advance = (fj.dir === 1 ? dy > 0 : dy < 0) ? stepDelta : -stepDelta;
+  fj.targetS = clamp(fj.targetS + advance, 0, fj.len);
+  fj.engaged = true;
+  if (fj.targetS > 0.35) fj.hasLeftOrigin = true;
+}
+function syncFloorStop(i){
+  floorJourney.step = i;
+  state.selectedThreshold = i;
+  renderEntries();
+  updatePins(true);
+  updateFloorCue(i);
+  writeRoute();
+}
+function updateFloorCue(i){
+  const label = $('#floorLabel');
+  if (label) label.textContent = `Scroll · ${THRESHOLDS[i].num} ${THRESHOLDS[i].name}`;
+  $$('#floorTicks i').forEach((t,k) => {
+    t.classList.toggle('is-on', k === i);
+    t.classList.toggle('is-past', k < i);
+  });
+}
+function updateFloorJourney(dt){
+  const fj = floorJourney;
+  if (!fj.engaged) return;
+  
+  // Brisk, responsive, cinematic walking physics
+  const k = reduced ? 36 : 24;
+  const damp = reduced ? 16 : 9.5;
+  const cap = reduced ? 3.0 : 2.8; // ~2.8 m/s brisk walking glide
+  let remaining = Math.min(dt, .1);
+  while (remaining > 1e-4){
+    const h = Math.min(1/120, remaining);
+    fj.v += (fj.targetS - fj.s) * k * h;
+    fj.v *= Math.exp(-damp*h);
+    fj.v = clamp(fj.v, -cap, cap);
+    fj.s += fj.v * h;
+    remaining -= h;
+  }
+  if (Math.abs(fj.targetS - fj.s) < 0.005 && Math.abs(fj.v) < 0.02){
+    fj.s = fj.targetS; fj.v = 0;
+  }
+  fj.s = clamp(fj.s, 0, fj.len);
+  fj.speed = Math.abs(fj.v);
+  if (fj.s > 0.4) fj.hasLeftOrigin = true;
+  
+  const smp = floorSample(fj.s);
+  player.x = smp.x; player.z = smp.z;
+  const target = THRESHOLDS[fj.planTarget] || THRESHOLDS[0];
+  const travelYaw = Math.atan2(-smp.tx, -smp.tz);
+  const e = clamp(1 - (fj.len - fj.s)/4.0, 0, 1);
+  const ease = e*e*(3-2*e);
+  look.tyaw = travelYaw + angleDelta(travelYaw, target.spawn.yaw)*ease;
+  look.tpitch = 0;
+  
+  // Arrival at destination floor
+  if (!fj.settled && fj.len > 0 && (fj.len - fj.s) < 0.22 && Math.abs(fj.v) < 0.35){
+    const sp = target.spawn;
+    player.x = sp.x; player.z = sp.z;
+    look.tyaw = sp.yaw;
+    state.lastSpawn = { x:sp.x, z:sp.z, yaw:sp.yaw };
+    fj.s = fj.len;
+    fj.targetS = fj.len;
+    fj.v = 0;
+    fj.settled = true;
+    fj.engaged = false;
+    fj.latchUntil = performance.now() + 250;
+    fj.scrollAcc = 0;
+    if (fj.step !== fj.planTarget){
+      syncFloorStop(fj.planTarget);
+    }
+  } else if (!fj.settled && fj.hasLeftOrigin && fj.len > 0 && fj.s < 0.15 && fj.targetS <= 0.05 && Math.abs(fj.v) < 0.35){
+    // Retreated back to origin floor
+    const origin = THRESHOLDS[fj.origin] || THRESHOLDS[0];
+    const sp = origin.spawn;
+    player.x = sp.x; player.z = sp.z;
+    look.tyaw = sp.yaw;
+    state.lastSpawn = { x:sp.x, z:sp.z, yaw:sp.yaw };
+    fj.s = 0;
+    fj.targetS = 0;
+    fj.v = 0;
+    fj.settled = true;
+    fj.engaged = false;
+    fj.latchUntil = performance.now() + 250;
+    fj.scrollAcc = 0;
+    syncFloorStop(fj.origin);
+  }
+}
+
+/* ---------------- scene switching ---------------- */
+function switchToExterior(instant=false){
+  state.phase = 'exterior';
+  document.body.classList.remove('is-interior');
+  $('#uiExterior').classList.remove('is-hidden');
+  $('#uiInterior').classList.add('is-hidden');
+  $('#minimap').classList.add('is-hidden');
+  renderPass.scene = sceneEx; renderPass.camera = camEx;
+  renderer.toneMappingExposure = settingsEx.exposure;
+  bloom.strength = settingsEx.glow; bloom.threshold = .8; bloom.radius = .6;
+  grade.uniforms.uScene.value = 0;
+  grade.uniforms.uVignette.value = .5;
+  grade.uniforms.uGrain.value = .014;
+  grade.uniforms.uFlicker.value = 0;
+  audio.setScene('exterior');
+  renderEntries();
+  buildDock();
+  updatePins(true);
+  if (instant){
+    orbit.az = orbit.azT = ORBIT_DEFAULT.az; orbit.elev = orbit.elevT = ORBIT_DEFAULT.elev; orbit.radius = orbit.radiusT = ORBIT_DEFAULT.radius; orbit.targetY = orbit.targetYT = ORBIT_DEFAULT.targetY;
+    journey.engaged = false; journey.pos = journey.target = -1; journey.vel = 0;
+    journey.zoom = 1; journey.blend = 0; journey.snapAt = 0; journey.step = -1; journey.drift = 0; journey.dir = 0;
+    state.selectedEntrance = 0;
+    floorJourney.engaged = false;
+    renderEntries();
+    updateJourneyCue(-1);
+  }
+  writeRoute();
+}
+function switchToInterior(ent){
+  state.phase = 'interior';
+  document.body.classList.add('is-interior');
+  $('#uiExterior').classList.add('is-hidden');
+  $('#uiInterior').classList.remove('is-hidden');
+  if (state.showMinimap) $('#minimap').classList.remove('is-hidden');
+  renderPass.scene = sceneIn; renderPass.camera = camIn;
+  renderer.toneMappingExposure = settingsIn.brightness;
+  bloom.strength = settingsIn.glow; bloom.threshold = .78; bloom.radius = .5;
+  grade.uniforms.uScene.value = 1;
+  grade.uniforms.uVignette.value = .78;
+  grade.uniforms.uGrain.value = .028 * settingsIn.grain;
+  grade.uniforms.uFlicker.value = settingsIn.flicker;
+  audio.setScene('interior');
+  const th = THRESHOLDS[state.selectedThreshold];
+  player.x = th.spawn.x; player.z = th.spawn.z;
+  look.yaw = look.tyaw = th.spawn.yaw; look.pitch = look.tpitch = 0;
+  state.lastSpawn = { ...th.spawn };
+  floorJourney.engaged = false; floorJourney.step = state.selectedThreshold;
+  floorJourney.planTarget = state.selectedThreshold; floorJourney.targetF = state.selectedThreshold;
+  floorJourney.s = floorJourney.len = 0; floorJourney.v = 0; floorJourney.speed = 0; floorJourney.targetS = 0;
+  floorJourney.pos = null; floorJourney.cum = null; floorJourney.snapAt = 0; floorJourney.dir = 0;
+  floorJourney.settled = true; floorJourney.latchUntil = performance.now() + 250; floorJourney.scrollAcc = 0; floorJourney.hasLeftOrigin = false; floorJourney.origin = state.selectedThreshold;
+  updateFloorCue(state.selectedThreshold);
+  renderEntries();
+  buildDock();
+  updatePins(true);
+  writeRoute();
+}
+
+/* ---------------- transitions ---------------- */
+function setLoad(p){
+  const el = $('#preloader');
+  el.style.setProperty('--p', p);
+  el.setAttribute('aria-valuenow', Math.round(p*100));
+  $('#preHint').textContent = `Loading the tower — ${Math.round(p*100)}%`;
+}
+function setVeil(on, label=''){
+  $('#veilLabel').textContent = label;
+  $('#veil').classList.toggle('is-on', on);
+}
+async function enterBuilding(i = state.selectedEntrance){
+  if (state.busy || state.phase !== 'exterior') return;
+  i = clamp(typeof i === 'number' ? i : state.selectedEntrance, 0, ENTRANCES.length - 1);
+  state.busy = true;
+  state.selectedEntrance = i;
+  state.selectedThreshold = clamp(i, 0, THRESHOLDS.length - 1);
+  renderEntries();
+  updatePins(true);
+  const ent = ENTRANCES[i];
+  $('#enterBuilding').disabled = true;
+  audio.click(); audio.thud();
+  tweenCamera({ az:ent.az, elev:.02, radius:66, targetY:10 }, 1.5);
+  await wait(980);
+  setVeil(true, `ENTERING — ${ent.name.toUpperCase()}`);
+  await wait(520);
+  if (!state.interiorReady){
+    setVeil(true, `PREPARING INTERIOR — ${Math.round(state.interiorProgress*100)}%`);
+    try { await loadInterior(); }
+    catch (e) {
+      setVeil(false); state.busy = false; $('#enterBuilding').disabled = false;
+      toast('The interior could not be loaded.'); return;
+    }
+  }
+  setVeil(true, 'LEVEL 0');
+  await wait(420);
+  switchToInterior(ent);
+  await wait(260);
+  setVeil(false);
+  $('#enterBuilding').disabled = false;
+  state.busy = false;
+  toast('Level 0 — the lift opened on the wrong floor.');
+}
+async function exitBuilding(){
+  if (state.busy || state.phase !== 'interior') return;
+  state.busy = true;
+  audio.click(); audio.thud();
+  setVeil(true, 'RETURNING — SAIGON');
+  await wait(700);
+  switchToExterior(true);
+  await wait(120);
+  setVeil(false);
+  state.busy = false;
+  toast('Back above the clouds. The tower is still 461 metres tall.');
+}
+async function takeExpressLift(){
+  if (state.busy || state.phase !== 'interior') return;
+  state.busy = true;
+  audio.click();
+  audio.chime();
+  setVeil(true, 'ASCENDING — EXPRESS LIFT 01');
+  await wait(850);
+  switchToExterior(true);
+  await wait(180);
+  setVeil(false);
+  state.busy = false;
+  toast('Express elevator to Saigon — 461 metres above the clouds.');
+}
+
+/* ---------------- URL routes ----------------
+   #/exterior                 wide shot
+   #/entrance/1|2|3           exterior, settled on an entrance
+   #/floor/1|2|3              The Floor Below, at a threshold
+   Routes are written with replaceState so scrolling does not fill history;
+   editing the hash or following a deep link is applied to the live state. */
+const routing = { applying:false, armed:false };
+
+function routePath(){
+  if (state.phase === 'interior') return `floor/${state.selectedThreshold+1}`;
+  if (state.phase === 'exterior') return journey.step >= 0 ? `entrance/${journey.step+1}` : 'exterior';
+  return '';
+}
+function writeRoute(){
+  if (!routing.armed || routing.applying) return;
+  const p = routePath();
+  if (!p) return;
+  const cleanUrl = '/' + p;
+  if (location.pathname === cleanUrl && !location.hash) return;
+  try {
+    history.replaceState(null, '', cleanUrl);
+  } catch (e) {
+    try { history.replaceState(null, '', '#/' + p); } catch (e2) {}
+  }
+}
+function readRoute(){
+  const hashRaw = decodeURIComponent(location.hash || '').replace(/^#\/?/, '').trim().toLowerCase();
+  const pathRaw = decodeURIComponent(location.pathname || '').replace(/^\/+/, '').trim().toLowerCase();
+  const raw = (hashRaw || pathRaw).replace(/\/+$/, '');
+  let m = raw.match(/^(?:.*\/)?entrance\/(\d{1,2})$/) || raw.match(/^(?:.*\/)?entrance-(\d{1,2})$/);
+  if (m) return { view:'entrance', i:clamp(parseInt(m[1],10)-1, 0, ENTRANCES.length-1) };
+  m = raw.match(/^(?:.*\/)?floor(?:\/(\d{1,2}))?$/) || raw.match(/^(?:.*\/)?floor-(\d{1,2})$/);
+  if (m) return { view:'floor', i:m[1] ? clamp(parseInt(m[1],10)-1, 0, THRESHOLDS.length-1) : clamp(state.selectedThreshold, 0, THRESHOLDS.length-1) };
+  return { view:'exterior', i:-1 };
+}
+async function applyRoute(){
+  if (state.phase === 'loading' || routing.applying) return;
+  if (state.busy){ setTimeout(applyRoute, 300); return; }
+  const r = readRoute();
+  routing.applying = true;
+  try {
+    if (r.view === 'floor'){
+      state.selectedThreshold = r.i;
+      state.selectedEntrance = clamp(r.i, 0, ENTRANCES.length - 1);
+      if (state.phase === 'interior') selectThreshold(r.i);
+      else await enterBuilding(state.selectedEntrance);
+    } else if (state.phase === 'interior'){
+      await exitBuilding();
+      if (r.view === 'entrance') selectEntrance(r.i);
+    } else if (r.view === 'entrance'){
+      selectEntrance(r.i);
+    } else if (journey.step !== -1 || state.selectedEntrance !== 0){
+      resetOrbit();
+    }
+  } catch (e) {
+    console.warn('route apply failed', e);
+  } finally {
+    routing.applying = false;
+    writeRoute();
+  }
+}
+addEventListener('hashchange', () => { applyRoute(); });
+addEventListener('popstate', () => { applyRoute(); });
+function enterSite(){
+  if (state.phase !== 'loading') return;
+  const deep = readRoute();
+  try { ensureAudio(); audio.ensure(); audio.setScene('exterior'); } catch (e) { console.warn('audio unavailable', e); }
+  $('#preloader').classList.add('is-hidden');
+  document.body.classList.remove('is-locked');
+  switchToExterior(false);
+  if (!reduced){
+    orbit.az = .12; orbit.elev = .22; orbit.radius = 640; orbit.targetY = 150;
+    orbit.azT = ORBIT_DEFAULT.az; orbit.elevT = ORBIT_DEFAULT.elev;
+    orbit.radiusT = ORBIT_DEFAULT.radius; orbit.targetYT = ORBIT_DEFAULT.targetY;
+  }
+  if (deep.view !== 'exterior'){
+    routing.armed = true;
+    setTimeout(() => { applyRoute(); }, deep.view === 'floor' ? 250 : 550);
+  } else {
+    routing.armed = true;
+    writeRoute();
+  }
+  if (deep.view === 'floor') {
+    loadInterior().catch(()=>{});
+  } else {
+    setTimeout(() => { loadInterior().catch(()=>{}); }, 1000);
+  }
+  setTimeout(() => { if (!state.busy && state.phase === 'exterior') toast(innerWidth < 900 ? 'Three ways in — choose an entrance below.' : 'Scroll through the three ways in — or drag to orbit.'); }, 2200);
+}
+
+/* ---------------- settings + dock ---------------- */
+const settingsEx = { exposure:1.05, glow:.55, haze:.5, elev:8, lights:true, pins:true, orbit:true };
+const settingsIn = { brightness:1.22, flicker:.35, grain:.6, glow:.5, speed:1, look:1, pins:true, minimap:true };
+
+function buildDock(){
+  const body = $('#dockBody');
+  body.innerHTML = '';
+  const isIn = state.phase === 'interior';
+  if (!isIn){
+    addSlider(body, 'Exposure', .5, 1.8, .01, settingsEx.exposure, v => { settingsEx.exposure = v; if (state.phase==='exterior') renderer.toneMappingExposure = v; }, v=>v.toFixed(2));
+    addSlider(body, 'Glow', 0, 1.4, .01, settingsEx.glow, v => { settingsEx.glow = v; if (state.phase==='exterior') bloom.strength = v; }, v=>v.toFixed(2));
+    addSlider(body, 'Haze', 0, 1, .01, settingsEx.haze, v => { settingsEx.haze = v; sceneEx.fog.near = lerp(720, 210, v); sceneEx.fog.far = lerp(2100, 1150, v); }, v=>Math.round(v*100)+'%');
+    addSlider(body, 'View angle', -10, 34, .5, settingsEx.elev, v => { settingsEx.elev = v; orbit.elevT = orbit.elev = v*DEG; }, v=>Math.round(v)+'°');
+    addSwitch(body, 'City lights', settingsEx.lights, v => { settingsEx.lights = v; cityGroup.visible = v; });
+    addSwitch(body, 'Entrance pins', settingsEx.pins, v => { settingsEx.pins = v; $('#pinsExterior').classList.toggle('is-off', !v); });
+    addSwitch(body, 'Auto-orbit', settingsEx.orbit, v => { settingsEx.orbit = v; state.autoOrbit = v; });
+    addActions(body, [
+      ['Zoom out', () => zoomBy(1.22)],
+      ['Zoom in', () => zoomBy(.82)],
+      ['Reset view', resetOrbit],
+      ['Save frame', saveFrame]
+    ]);
+    const note = document.createElement('div'); note.className = 'dock__note';
+    note.textContent = 'Landmark 81 · 3D scan · window lights simulated';
+    body.appendChild(note);
+  } else {
+    addSlider(body, 'Brightness', .6, 1.7, .01, settingsIn.brightness, v => { settingsIn.brightness = v; if (state.phase==='interior') renderer.toneMappingExposure = v; }, v=>v.toFixed(2));
+    addSlider(body, 'Fluorescent flicker', 0, 1, .01, settingsIn.flicker, v => { settingsIn.flicker = v; grade.uniforms.uFlicker.value = v; }, v=>Math.round(v*100)+'%');
+    addSlider(body, 'Grain', 0, 1, .01, settingsIn.grain, v => { settingsIn.grain = v; grade.uniforms.uGrain.value = .028*v; }, v=>Math.round(v*100)+'%');
+    addSlider(body, 'Glow', 0, 1.2, .01, settingsIn.glow, v => { settingsIn.glow = v; if (state.phase==='interior') bloom.strength = v; }, v=>v.toFixed(2));
+    addSlider(body, 'Walk speed', .5, 1.8, .05, settingsIn.speed, v => { settingsIn.speed = v; }, v=>v.toFixed(2)+'×');
+    addSlider(body, 'Look speed', .4, 2, .05, settingsIn.look, v => { settingsIn.look = v; }, v=>v.toFixed(2)+'×');
+    addSwitch(body, 'Threshold pins', settingsIn.pins, v => { settingsIn.pins = v; $('#pinsInterior').classList.toggle('is-off', !v); });
+    addSwitch(body, 'Minimap', settingsIn.minimap, v => { settingsIn.minimap = v; state.showMinimap = v; $('#minimap').classList.toggle('is-hidden', !v); });
+    addActions(body, [
+      ['Reset position', () => teleportTo(state.lastSpawn)],
+      ['Return outside', exitBuilding]
+    ]);
+    const note = document.createElement('div'); note.className = 'dock__note';
+    note.textContent = 'Backrooms VR · supplied environment · baked lighting';
+    body.appendChild(note);
+  }
+}
+function addSlider(parent, label, min, max, step, value, onInput, fmt){
+  const row = document.createElement('label'); row.className = 'ctl';
+  row.innerHTML = `<span class="ctl__top"><span class="ctl__label">${label}</span><span class="ctl__val"></span></span>`;
+  const inp = document.createElement('input');
+  inp.type = 'range'; inp.min = min; inp.max = max; inp.step = step; inp.value = value;
+  const val = row.querySelector('.ctl__val');
+  val.textContent = fmt ? fmt(value) : value;
+  inp.addEventListener('input', () => { const v = parseFloat(inp.value); val.textContent = fmt?fmt(v):v; onInput(v); });
+  row.appendChild(inp);
+  parent.appendChild(row);
+  return inp;
+}
+function addSwitch(parent, label, on, onChange){
+  const row = document.createElement('div'); row.className = 'ctl ctl--switch';
+  row.innerHTML = `<span class="ctl__label">${label}</span>`;
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'switch' + (on?' is-on':'');
+  b.setAttribute('role','switch'); b.setAttribute('aria-checked', String(on));
+  b.addEventListener('click', () => {
+    const v = !b.classList.contains('is-on');
+    b.classList.toggle('is-on', v); b.setAttribute('aria-checked', String(v));
+    audio.click(); onChange(v);
+  });
+  row.appendChild(b); parent.appendChild(row);
+}
+function addActions(parent, items){
+  const wrap = document.createElement('div'); wrap.className = 'dock__actions';
+  items.forEach(([label, fn]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = label;
+    b.addEventListener('click', () => { audio.click(); fn(); });
+    wrap.appendChild(b);
+  });
+  parent.appendChild(wrap);
+}
+function saveFrame(){
+  composer.render();
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = state.phase === 'interior' ? 'backrooms-level0.png' : 'landmark81.png';
+  a.click();
+  toast('Frame saved.');
+}
+
+/* sound button sync */
+function syncSound(){
+  const label = state.muted ? 'Muted' : 'Sound';
+  $$('.pill__label').forEach(el => el.textContent = label);
+  $$('[id^="sound"]').forEach(b => {
+    b.classList.toggle('is-muted', state.muted);
+    b.setAttribute('aria-pressed', String(!state.muted));
+  });
+}
+
+/* ---------------- audio ---------------- */
+const audio = {
+  ctx:null, master:null, ext:null, int:null, muted:false,
+  ensure(){
+    if (this.ctx) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ctx = new AC();
+    const master = ctx.createGain(); master.gain.value = 1; master.connect(ctx.destination);
+    const ext = ctx.createGain(); ext.gain.value = 0; ext.connect(master);
+    const int = ctx.createGain(); int.gain.value = 0; int.connect(master);
+
+    const brown = ctx.createBuffer(1, ctx.sampleRate*3, ctx.sampleRate);
+    const d = brown.getChannelData(0);
+    let last = 0;
+    for (let i=0;i<d.length;i++){ const w = Math.random()*2-1; last = (last + .02*w)/1.02; d[i] = last*3.2; }
+    const city = ctx.createBufferSource(); city.buffer = brown; city.loop = true;
+    const cityF = ctx.createBiquadFilter(); cityF.type = 'lowpass'; cityF.frequency.value = 260;
+    const cityG = ctx.createGain(); cityG.gain.value = .5;
+    city.connect(cityF).connect(cityG).connect(ext); city.start();
+    const lfo = ctx.createOscillator(); lfo.frequency.value = .06;
+    const lfoG = ctx.createGain(); lfoG.gain.value = 120;
+    lfo.connect(lfoG).connect(cityF.frequency); lfo.start();
+    const air = ctx.createBufferSource(); air.buffer = brown; air.loop = true;
+    const airF = ctx.createBiquadFilter(); airF.type = 'bandpass'; airF.frequency.value = 950; airF.Q.value = .4;
+    const airG = ctx.createGain(); airG.gain.value = .05;
+    air.connect(airF).connect(airG).connect(ext); air.start();
+
+    const humF = ctx.createBiquadFilter(); humF.type = 'lowpass'; humF.frequency.value = 640;
+    const humG = ctx.createGain(); humG.gain.value = .55;
+    humF.connect(humG).connect(int);
+    [55, 110, 220].forEach((hz,i) => {
+      const o = ctx.createOscillator(); o.type = i===2?'triangle':'sine'; o.frequency.value = hz; o.detune.value = i*3;
+      const g = ctx.createGain(); g.gain.value = .035/(i+1);
+      o.connect(g).connect(humF); o.start();
+    });
+    const vib = ctx.createOscillator(); vib.frequency.value = .38;
+    const vibG = ctx.createGain(); vibG.gain.value = .012;
+    vib.connect(vibG).connect(humG.gain); vib.start();
+    const room = ctx.createBufferSource(); room.buffer = brown; room.loop = true;
+    const roomF = ctx.createBiquadFilter(); roomF.type = 'bandpass'; roomF.frequency.value = 520; roomF.Q.value = .7;
+    const roomG = ctx.createGain(); roomG.gain.value = .08;
+    room.connect(roomF).connect(roomG).connect(int); room.start();
+
+    this.ctx = ctx; this.master = master; this.ext = ext; this.int = int;
+  },
+  setScene(which){
+    if (!this.ctx) return;
+    auditRamp(this.ext.gain, which==='exterior'?.55:0, 1.2);
+    auditRamp(this.int.gain, which==='interior'?.8:0, 1.2);
+  },
+  setMuted(m){
+    this.muted = m;
+    if (this.ctx) auditRamp(this.master.gain, m?0:1, .35);
+  },
+  click(){
+    if (!this.ctx || this.muted) return;
+    const { ctx, master } = this;
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type='triangle'; o.frequency.setValueAtTime(680, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(420, ctx.currentTime+.09);
+    g.gain.setValueAtTime(0, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(.06, ctx.currentTime+.01);
+    g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime+.12);
+    o.connect(g).connect(master); o.start(); o.stop(ctx.currentTime+.14);
+  },
+  thud(){
+    if (!this.ctx || this.muted) return;
+    const { ctx, master } = this;
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type='sine'; o.frequency.setValueAtTime(90, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(38, ctx.currentTime+.5);
+    g.gain.setValueAtTime(0, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(.16, ctx.currentTime+.03);
+    g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime+.8);
+    o.connect(g).connect(master); o.start(); o.stop(ctx.currentTime+.85);
+  },
+  step(speed=2){
+    if (!this.ctx || this.muted) return;
+    const { ctx, master } = this;
+    const len = Math.floor(ctx.sampleRate*.12);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i=0;i<len;i++) d[i] = (Math.random()*2-1) * Math.pow(1-i/len, 3);
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const f = ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value = 620 + Math.random()*220; f.Q.value = 1.1;
+    const g = ctx.createGain(); g.gain.value = .05 + Math.min(.06, speed*.012);
+    src.connect(f).connect(g).connect(master); src.start();
+  },
+  door(){
+    if (!this.ctx || this.muted) return;
+    const { ctx, master } = this;
+    const now = ctx.currentTime;
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type='triangle'; o.frequency.setValueAtTime(320, now);
+    o.frequency.exponentialRampToValueAtTime(140, now+.18);
+    g.gain.setValueAtTime(.08, now);
+    g.gain.exponentialRampToValueAtTime(.0001, now+.25);
+    o.connect(g).connect(master); o.start(); o.stop(now+.26);
+    const o2 = ctx.createOscillator(), g2 = ctx.createGain();
+    o2.type='sawtooth'; o2.frequency.setValueAtTime(75, now+.05);
+    o2.frequency.linearRampToValueAtTime(110, now+.35);
+    g2.gain.setValueAtTime(.03, now+.05);
+    g2.gain.exponentialRampToValueAtTime(.0001, now+.45);
+    o2.connect(g2).connect(master); o2.start(now+.05); o2.stop(now+.46);
+  },
+  chime(){
+    if (!this.ctx || this.muted) return;
+    const { ctx, master } = this;
+    const now = ctx.currentTime;
+    [659.25, 523.25].forEach((hz, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(hz, now + i * 0.18);
+      g.gain.setValueAtTime(0, now + i * 0.18);
+      g.gain.linearRampToValueAtTime(0.12, now + i * 0.18 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.18 + 1.2);
+      o.connect(g).connect(master);
+      o.start(now + i * 0.18);
+      o.stop(now + i * 0.18 + 1.25);
+    });
+  }
+};
+function auditRamp(param, to, dur){
+  if (!audio.ctx) return;
+  const t = audio.ctx.currentTime;
+  param.cancelScheduledValues(t);
+  param.setValueAtTime(param.value, t);
+  param.linearRampToValueAtTime(to, t+dur);
+}
+function ensureAudio(){
+  audio.ensure();
+  if (audio.ctx?.state === 'suspended') audio.ctx.resume();
+}
+function toggleSound(){
+  ensureAudio();
+  state.muted = !state.muted;
+  audio.setMuted(state.muted);
+  syncSound();
+  if (!state.muted) audio.click();
+}
+
+/* ---------------- toast ---------------- */
+let toastT;
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg; t.classList.add('is-on');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('is-on'), 4200);
+}
+
+/* ---------------- wiring ---------------- */
+$('#enterSite').addEventListener('click', enterSite);
+$('#enterBuilding').addEventListener('click', () => enterBuilding(state.selectedEntrance));
+$('#walkThere').addEventListener('click', () => selectThreshold(state.selectedThreshold, true));
+$('#exitBuilding').addEventListener('click', exitBuilding);
+$('#liftCta')?.addEventListener('click', () => takeExpressLift());
+
+$('#floorPrev')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  audio.click();
+  const cur = floorJourney.step >= 0 ? floorJourney.step : state.selectedThreshold;
+  if (cur > 0) selectThreshold(cur - 1, true);
+});
+$('#floorNext')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  audio.click();
+  const cur = floorJourney.step >= 0 ? floorJourney.step : state.selectedThreshold;
+  if (cur < THRESHOLDS.length - 1) selectThreshold(cur + 1, true);
+});
+$('#exPrev')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  audio.click();
+  if (journey.step <= 0) resetOrbit();
+  else selectEntrance(journey.step - 1);
+});
+$('#exNext')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  audio.click();
+  const next = Math.min(ENTRANCES.length - 1, journey.step + 1);
+  selectEntrance(next);
+});
+
+$$('#floorTicks i').forEach((tick, idx) => {
+  tick.addEventListener('click', (e) => {
+    e.stopPropagation();
+    audio.click();
+    selectThreshold(idx, true);
+  });
+});
+$$('#journeyTicks i').forEach((tick, idx) => {
+  tick.addEventListener('click', (e) => {
+    e.stopPropagation();
+    audio.click();
+    if (idx === 0) resetOrbit();
+    else selectEntrance(idx - 1);
+  });
+});
+
+['soundEx','soundIn'].forEach(id => $('#'+id).addEventListener('click', toggleSound));
+['aboutEx','aboutIn'].forEach(id => $('#'+id).addEventListener('click', () => { audio.click(); openAbout(); }));
+$('#aboutClose').addEventListener('click', closeAbout);
+$('#about').addEventListener('click', (e) => { if (e.target === $('#about')) closeAbout(); });
+function openAbout(){ $('#about').classList.add('is-on'); $('#about').setAttribute('aria-hidden','false'); $('#aboutClose').focus({preventScroll:true}); }
+function closeAbout(){ $('#about').classList.remove('is-on'); $('#about').setAttribute('aria-hidden','true'); }
+['fsEx'].forEach(id => $('#'+id).addEventListener('click', async () => {
+  audio.click();
+  try { if (!document.fullscreenElement) await document.documentElement.requestFullscreen(); else await document.exitFullscreen(); } catch {}
+}));
+$('#dockToggle').addEventListener('click', () => {
+  const d = $('#dock');
+  d.classList.toggle('is-collapsed');
+  $('#dockToggle').textContent = d.classList.contains('is-collapsed') ? '+' : '−';
+});
+if (innerWidth < 900){ $('#dock').classList.add('is-collapsed'); $('#dockToggle').textContent = '+'; }
+
+/* joystick */
+function placeJoystick(){
+  if (innerWidth >= 900 || state.phase !== 'interior') return;
+  const el = $('#joystick'), panel = $('#panelInterior');
+  if (!el || !panel) return;
+  const r = panel.getBoundingClientRect();
+  if (r.height < 10) return;
+  el.style.bottom = Math.round(innerHeight - r.top + 12) + 'px';
+}
+(function joystick(){
+  const el = $('#joystick'), knob = $('#joyKnob');
+  if (!el) return;
+  let id = null, cx = 0, cy = 0, R = 34;
+  function move(e){
+    if (e.pointerId !== id) return;
+    const dx = clamp(e.clientX-cx, -R, R), dy = clamp(e.clientY-cy, -R, R);
+    knob.style.transform = `translate(${dx}px,${dy}px)`;
+    joy.x = dx/R; joy.z = dy/R;
+  }
+  el.addEventListener('pointerdown', (e) => {
+    id = e.pointerId; joy.active = true;
+    const r = el.getBoundingClientRect(); cx = r.left+r.width/2; cy = r.top+r.height/2; R = r.width*.34;
+    el.setPointerCapture(e.pointerId); move(e);
+  });
+  el.addEventListener('pointermove', move);
+  function up(e){
+    if (e.pointerId !== id) return;
+    id = null; joy.x = 0; joy.z = 0; joy.active = false;
+    knob.style.transform = '';
+  }
+  el.addEventListener('pointerup', up);
+  el.addEventListener('pointercancel', up);
+})();
+if ('ResizeObserver' in window){
+  const panelIn = $('#panelInterior');
+  if (panelIn) new ResizeObserver(() => requestAnimationFrame(placeJoystick)).observe(panelIn);
+}
+
+
+/* resize */
+function onResize(){
+  const aspect = innerWidth/innerHeight;
+  camEx.aspect = aspect; camIn.aspect = aspect;
+  camEx.fov = innerWidth < 900 ? 52 : 44;
+  camIn.fov = innerWidth < 900 ? 68 : 62;
+  camEx.updateProjectionMatrix(); camIn.updateProjectionMatrix();
+  renderer.setPixelRatio(Math.min(devicePixelRatio, coarse?1.3:1.75));
+  renderer.setSize(innerWidth, innerHeight);
+  if (windowUniforms) windowUniforms.uDpr.value = renderer.getPixelRatio();
+  composer.setSize(innerWidth, innerHeight);
+  bloom.setSize(innerWidth/2, innerHeight/2);
+  requestAnimationFrame(placeJoystick);
+}
+addEventListener('resize', onResize);
+
+/* ---------------- boot ---------------- */
+buildPins();
+renderEntries();
+buildDock();
+updateJourneyCue(-1);
+bindKeys();
+onResize();
+updatePins(true);
+
+let landmarkPending = true;
+loadLandmark().then(() => {
+  landmarkPending = false;
+  setLoad(1);
+  const deep = readRoute();
+  if (deep.view !== 'exterior'){
+    enterSite();
+  } else {
+    $('#preHint').textContent = 'The tower is ready';
+    $('#enterSite').classList.add('is-shown');
+    $('#enterSite').focus({preventScroll:true});
+  }
+}).catch((e) => {
+  console.warn(e);
+  fail('The landmark model could not be loaded.');
+});
+setLoad(.06);
+
+function fail(msg){
+  console.error(msg);
+  $('#fallback').classList.add('is-on');
+  $('#preloader').classList.add('is-hidden');
+  document.body.classList.remove('is-locked');
+}
+
+/* ---------------- loop ---------------- */
+function tick(){
+  requestAnimationFrame(tick);
+  const dt = Math.min(clock.getDelta(), .05);
+  const t = clock.elapsedTime;
+  state.time = t; state.frames++;
+
+  if (state.phase === 'exterior'){ updateExteriorCamera(dt); updatePins(); }
+  else if (state.phase === 'interior'){ updateInterior(dt); updatePins(); }
+
+  if (windowUniforms) windowUniforms.uTime.value = t;
+  skyUniforms.uTime.value = t;
+  sky.position.copy(camEx.position);
+  grade.uniforms.uTime.value = t;
+
+  composer.render();
+}
+
+/* ---------------- QA hook ---------------- */
+window.__exp = {
+  state, renderer, sceneEx, sceneIn, camEx, camIn, orbit, player, look, journey, floorJourney, routing,
+  ENTRANCES, THRESHOLDS,
+  selectEntrance, enterBuilding, exitBuilding, selectThreshold, teleport: teleportTo,
+  enterSite, resetOrbit, toggleSound, buildDock, readRoute, applyRoute, writeRoute,
+  buildFloorNav,
+  resetFloorNav(){ floorNav = null; },
+  floorNavStats(){ return floorNav ? { nx:floorNav.nx, nz:floorNav.nz, res:floorNav.res, minX:floorNav.minX, minZ:floorNav.minZ } : null; },
+  navFreeAt(x,z){ const n=floorNav; if (!n) return null; return navFree(n, Math.floor((x-n.minX)/n.res), Math.floor((z-n.minZ)/n.res)); },
+  navLine(a,b){ return floorNav ? navLineFree(floorNav, a.x, a.z, b.x, b.z) : null; },
+  navCounts(){ const n=floorNav; if (!n) return null; let blocked=0; for (let i=0;i<n.blocked.length;i++) blocked+=n.blocked[i]; return { cells:n.blocked.length, blocked, free:n.blocked.length-blocked }; },
+  auditFloorPath(path){
+    const out = [];
+    for (let i=1;i<path.length;i++){
+      const a = path[i-1], b = path[i];
+      const dx = b.x-a.x, dz = b.z-a.z, len = Math.hypot(dx,dz);
+      if (len < .01) continue;
+      for (const y of [1.05, 1.55]){
+        ray.set(new THREE.Vector3(a.x, y, a.z), new THREE.Vector3(dx/len, 0, dz/len));
+        ray.far = Math.max(.01, len-.05);
+        const hits = ray.intersectObjects(colliders, false);
+        if (hits.length) out.push({ seg:i, y, d:+hits[0].distance.toFixed(2), len:+len.toFixed(2), mat:hits[0].object.material?.name || '' });
+      }
+    }
+    return out;
+  },
+  planFloorPath,
+  async loadInterior(){ try { await loadInterior(); return true; } catch { return false; } },
+  probeInterior(){
+    const h = player.eye, out = { colliders:colliders.length, segs:[] };
+    const seg = (a,b) => {
+      const dx=b.x-a.x, dz=b.z-a.z, len=Math.hypot(dx,dz);
+      ray.set(new THREE.Vector3(a.x,h,a.z), new THREE.Vector3(dx/len,0,dz/len));
+      ray.far = Math.max(.01, len-.02);
+      const hits = ray.intersectObjects(colliders,false);
+      return { len:+len.toFixed(2), hit:hits.length ? { d:+hits[0].distance.toFixed(2), mat:hits[0].object.material?.name||'', obj:hits[0].object.name } : null };
+    };
+    for (let i=0;i<THRESHOLDS.length-1;i++) out.segs.push({ from:i, to:i+1, ...seg(THRESHOLDS[i].spawn, THRESHOLDS[i+1].spawn) });
+    return out;
+  },
+  captureStats(){
+    composer.render();
+    const gl = renderer.getContext();
+    const w = gl.drawingBufferWidth, h = gl.drawingBufferHeight;
+    const px = new Uint8Array(w*h*4);
+    gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,px);
+    let sum=0, nz=0, n=w*h;
+    for (let i=0;i<n;i++){ const r=px[i*4],g=px[i*4+1],b=px[i*4+2]; sum+=r+g+b; if (r+g+b>24) nz++; }
+    return { width:w, height:h, average:sum/(n*3), visibleRatio:nz/n, frames:state.frames, phase:state.phase, chapter:null, progress:0,
+      player:{x:player.x,z:player.z,yaw:look.yaw}, pins:$$('.pin.is-on').length };
+  }
+};
+
+tick();
+</script>
+</body>
+</html>

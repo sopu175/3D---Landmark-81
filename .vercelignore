@@ -1,0 +1,7 @@
+node_modules
+qa
+shot-*.png
+*.mjs
+.DS_Store
+assets/*/textures
+
