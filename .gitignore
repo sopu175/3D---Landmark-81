@@ -3,4 +3,5 @@ node_modules
 qa/
 shot-*.png
 .vercel
+.vercelignore
 
